@@ -1,7 +1,7 @@
 name: Game CI
 on: [push]
 jobs:
-    Explore-GitHub-Actions:
+    Game-CI:
         runs-on: ubuntu-latest
         steps:
             - name: Build
