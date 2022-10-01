@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Button))]
 public class MenuTransitionButton : MonoBehaviour
 {
     [SerializeField]
@@ -11,10 +12,15 @@ public class MenuTransitionButton : MonoBehaviour
 
     private void Awake()
     {
-        _manager = FindObjectOfType<MenuTransitionManager>();
+        _manager = MenuTransitionManager.GetInstance();
         _button = GetComponent<Button>();
 
         _button.onClick.RemoveAllListeners();
-        _button.onClick.AddListener(() => _manager.Transition(_data));
+        _button.onClick.AddListener(() => Transition(_data));
+    }
+
+    private void Transition(MenuTransitionData data)
+    {
+        _manager.Transition(data);
     }
 }
