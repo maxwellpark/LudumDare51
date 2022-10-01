@@ -44,3 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21c76ffc62bebb642a72f097d9c78ea5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _blacklistedScenes:
+  - MainMenuScene
