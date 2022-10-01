@@ -1,12 +1,10 @@
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
-public class SpikesDebuff : Debuff
+public class FallingSpikesDebuff : EnvironmentDebuff
 {
     [SerializeField]
     private GameObject _spikePrefab;
 
-    private Tilemap _tilemap;
     private int _xMin;
     private int _xMax;
     private int _y;
@@ -33,7 +31,7 @@ public class SpikesDebuff : Debuff
     // Start is called before the first frame update
     protected override void Start()
     {
-        _tilemap = FindObjectOfType<Tilemap>();
+        base.Start();
         Debug.Log("Tile map size: " + _tilemap.size);
         Debug.Log("Map bounds min: " + _tilemap.cellBounds.min);
         Debug.Log("Map bounds max: " + _tilemap.cellBounds.max);
