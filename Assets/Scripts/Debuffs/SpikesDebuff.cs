@@ -1,9 +1,15 @@
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class SpikesDebuff : Debuff
 {
     [SerializeField]
     private GameObject _spikePrefab;
+
+    private Tilemap _tilemap;
+    private int _xMin;
+    private int _xMax;
+    private int _y;
 
     public override void Activate()
     {
@@ -12,15 +18,29 @@ public class SpikesDebuff : Debuff
 
     private GameObject SpawnSpike()
     {
-        var position = new Vector2(0, 0);
+        var position = GetNewSpikePosition();
         var obj = Instantiate(_spikePrefab, position, Quaternion.identity);
         return obj;
+    }
+
+    private Vector2 GetNewSpikePosition()
+    {
+        var x = Random.Range(_xMin, _xMax + 1);
+        var position = new Vector2(x, _y);
+        return position;
     }
 
     // Start is called before the first frame update
     protected override void Start()
     {
+        _tilemap = FindObjectOfType<Tilemap>();
+        Debug.Log("Tile map size: " + _tilemap.size);
+        Debug.Log("Map bounds min: " + _tilemap.cellBounds.min);
+        Debug.Log("Map bounds max: " + _tilemap.cellBounds.max);
 
+        _xMin = _tilemap.cellBounds.min.x + 1;
+        _xMax = _tilemap.cellBounds.max.x - 1;
+        _y = _tilemap.cellBounds.max.y;
     }
 
     // Update is called once per frame

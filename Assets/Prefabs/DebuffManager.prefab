@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c395f334083f3744d8db2ad8b8ba8333, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spikePrefab: {fileID: 0}
+  _spikePrefab: {fileID: 4489050890515247590, guid: 63877b2e8b90a5c4a81308b42bc19597, type: 3}
 --- !u!1 &3150447231374972645
 GameObject:
   m_ObjectHideFlags: 0
