@@ -546,6 +546,54 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 9017224920258993459, guid: 50e1711ac3263b8419a130eae5d7bc3f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9017224920258993459, guid: 50e1711ac3263b8419a130eae5d7bc3f, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9017224920258993459, guid: 50e1711ac3263b8419a130eae5d7bc3f, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9017224920258993459, guid: 50e1711ac3263b8419a130eae5d7bc3f, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9017224920258993459, guid: 50e1711ac3263b8419a130eae5d7bc3f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9017224920258993459, guid: 50e1711ac3263b8419a130eae5d7bc3f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9017224920547283236, guid: 50e1711ac3263b8419a130eae5d7bc3f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9017224920547283236, guid: 50e1711ac3263b8419a130eae5d7bc3f, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9017224920547283236, guid: 50e1711ac3263b8419a130eae5d7bc3f, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9017224920547283236, guid: 50e1711ac3263b8419a130eae5d7bc3f, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9017224920547283236, guid: 50e1711ac3263b8419a130eae5d7bc3f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9017224920547283236, guid: 50e1711ac3263b8419a130eae5d7bc3f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9017224921153785473, guid: 50e1711ac3263b8419a130eae5d7bc3f, type: 3}
       propertyPath: m_Name
       value: MainMenuButtonCanvas
