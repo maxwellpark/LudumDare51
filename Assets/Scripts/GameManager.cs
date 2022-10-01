@@ -4,11 +4,11 @@ using UnityEngine.SceneManagement;
 public class GameManager : StaticMonoBehaviour<GameManager>
 {
     [SerializeField]
-    private string _mainSceneName;
+    private GameData _gameData;
 
     public void RestartGame()
     {
-        SceneManager.LoadSceneAsync(_mainSceneName);
+        SceneManager.LoadSceneAsync(_gameData.mainSceneName);
     }
 
     // Start is called before the first frame update
