@@ -1,8 +1,11 @@
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public abstract class Debuff : MonoBehaviour, IDebuff
 {
     public abstract void Activate();
+
+    protected Tilemap _tilemap;
 
     protected virtual void Awake()
     {
@@ -12,7 +15,7 @@ public abstract class Debuff : MonoBehaviour, IDebuff
     // Start is called before the first frame update
     protected virtual void Start()
     {
-
+        _tilemap = FindObjectOfType<Tilemap>();
     }
 
     // Update is called once per frame
@@ -23,11 +26,11 @@ public abstract class Debuff : MonoBehaviour, IDebuff
 
     protected void OnEnable()
     {
-        
+
     }
 
     protected void OnDisable()
     {
-        
+
     }
 }
