@@ -453,6 +453,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UISceneLoader
       objectReference: {fileID: 0}
+    - target: {fileID: 4678552705399636945, guid: a3e82d924f44e764288329fefdfb0eb7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a3e82d924f44e764288329fefdfb0eb7, type: 3}
 --- !u!1 &1848959976

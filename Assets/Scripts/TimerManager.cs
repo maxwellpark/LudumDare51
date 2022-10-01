@@ -1,11 +1,10 @@
 using System;
-using System.Globalization;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class TimerManager : StaticMonoBehaviour<TimerManager>
 {
-    public static TimeSpan CurrentTime;
+    public TimeSpan CurrentTime;
     private float _secondsPast;
     private float _nextEventTimeInSeconds;
 
@@ -18,6 +17,7 @@ public class TimerManager : StaticMonoBehaviour<TimerManager>
     // Start is called before the first frame update
     void Start()
     {
+        _secondsPast = 0;
         _nextEventTimeInSeconds = _secondsBetweenEvents;
     }
 
@@ -26,13 +26,6 @@ public class TimerManager : StaticMonoBehaviour<TimerManager>
     {
         _secondsPast += Time.deltaTime;
         CurrentTime = TimeSpan.FromSeconds(_secondsPast);
-
-        var timeStr = string.Format(CultureInfo.CurrentCulture, "{0}:{1}:{2}",
-            CurrentTime.Minutes,
-            CurrentTime.Seconds,
-            CurrentTime.Milliseconds);
-
-        //Debug.Log("Time: " + timeStr);
 
         if (_secondsPast >= _nextEventTimeInSeconds)
         {
