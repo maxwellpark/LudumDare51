@@ -1,5 +1,6 @@
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class UISceneLoader : StaticMonoBehaviour<UISceneLoader>
@@ -26,14 +27,20 @@ public class UISceneLoader : StaticMonoBehaviour<UISceneLoader>
 
         if (!uiScene.isLoaded)
         {
-            Debug.Log("Loading UI scene additively...");
-            SceneManager.LoadSceneAsync(_uiSceneName, LoadSceneMode.Additive);
+            LoadScene();
         }
         else
         {
             Debug.Log("UI scene is already loaded.");
         }
     }
+
+    private void LoadScene()
+    {
+        Debug.Log("Loading UI scene additively...");
+        SceneManager.LoadSceneAsync(_uiSceneName, LoadSceneMode.Additive);
+    }
+
     private void OnEnable()
     {
         SceneManager.activeSceneChanged += SceneChangedHandler;

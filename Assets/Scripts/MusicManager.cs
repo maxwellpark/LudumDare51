@@ -25,6 +25,7 @@ public class MusicManager : StaticMonoBehaviour<MusicManager>
     protected override void Awake()
     {
         base.Awake();
+        return; // Update this when we have audio sources
         menuSrc.enabled = true;
         battleSrc.enabled = true;
         battleEndSrc.enabled = true;
