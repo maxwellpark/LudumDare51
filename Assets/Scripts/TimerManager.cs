@@ -4,9 +4,11 @@ using UnityEngine.Events;
 
 public class TimerManager : StaticMonoBehaviour<TimerManager>
 {
-    public TimeSpan CurrentTime;
+    public TimeSpan CurrentTime { get; private set; }
     private float _secondsPast;
     private float _nextEventTimeInSeconds;
+
+    public bool timerStopped;
 
     [SerializeField]
     private float _secondsBetweenEvents = 10;
@@ -17,6 +19,11 @@ public class TimerManager : StaticMonoBehaviour<TimerManager>
     // Start is called before the first frame update
     void Start()
     {
+        ResetTimer();
+    }
+
+    public void ResetTimer()
+    {
         _secondsPast = 0;
         _nextEventTimeInSeconds = _secondsBetweenEvents;
     }
@@ -24,6 +31,9 @@ public class TimerManager : StaticMonoBehaviour<TimerManager>
     // Update is called once per frame
     void Update()
     {
+        if (timerStopped)
+            return;
+
         _secondsPast += Time.deltaTime;
         CurrentTime = TimeSpan.FromSeconds(_secondsPast);
 

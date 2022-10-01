@@ -15,6 +15,9 @@ public class TimerUI : MonoBehaviour
 
     private void Update()
     {
+        if (_timerManager.timerStopped)
+            return;
+
         _timerText.text = FormatText();
     }
 
