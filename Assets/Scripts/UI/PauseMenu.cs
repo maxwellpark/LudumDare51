@@ -10,7 +10,12 @@ public class PauseMenu : MonoBehaviour
     private Button _resumeButton;
 
     [SerializeField]
+    private Button _restartButton;
+
+    [SerializeField]
     private Button _quitButton;
+
+    private GameManager _gameManager;
 
     private void ShowPauseMenu(bool paused)
     {
@@ -21,12 +26,17 @@ public class PauseMenu : MonoBehaviour
     // Start is called before the first frame update
     void OnEnable()
     {
+        _gameManager = GameManager.GetInstance();
         ShowPauseMenu(false);
+
         _quitButton.onClick.RemoveAllListeners();
         _quitButton.onClick.AddListener(() => ShowPauseMenu(true));
 
         _resumeButton.onClick.RemoveAllListeners();
         _resumeButton.onClick.AddListener(() => ShowPauseMenu(false));
+
+        _restartButton.onClick.RemoveAllListeners();
+        _restartButton.onClick.AddListener(_gameManager.RestartGame);
     }
 
     private void OnDisable()
@@ -36,6 +46,9 @@ public class PauseMenu : MonoBehaviour
 
         if (_resumeButton != null)
             _resumeButton.onClick.RemoveAllListeners();
+
+        if (_restartButton != null)
+            _restartButton.onClick.RemoveAllListeners();
     }
 
     // Update is called once per frame
