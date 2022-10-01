@@ -1,8 +1,6 @@
 using UnityEditor;
-using UnityEngine;
-using UnityEngine.Tilemaps;
 
-public class FloorTile : Tile
+public class FloorTile : CustomTile
 {
     // Start is called before the first frame update
     void Start()
@@ -19,9 +17,9 @@ public class FloorTile : Tile
 #if UNITY_EDITOR
     // The following is a helper that adds a menu item to create a FloorTile Asset
     [MenuItem("Assets/Create/CustomTiles/FloorTile")]
-    public static void CreateRoadTile()
+    public static void CreateFloorTile()
     {
-        string path = EditorUtility.SaveFilePanelInProject("Save FloorTile", "New FloorTile", "Asset", "Save Road Tile", "Assets");
+        string path = EditorUtility.SaveFilePanelInProject("Save FloorTile", "New FloorTile", "Asset", "Save Road Tile", "Assets/ScriptableObjects/CustomTiles");
         if (path == "")
             return;
         AssetDatabase.CreateAsset(CreateInstance<FloorTile>(), path);
