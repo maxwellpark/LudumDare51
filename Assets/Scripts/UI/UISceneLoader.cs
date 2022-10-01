@@ -10,6 +10,12 @@ public class UISceneLoader : StaticMonoBehaviour<UISceneLoader>
     [SerializeField]
     private string[] _blacklistedScenes;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        DontDestroyOnLoad(gameObject);
+    }
+
     public void SceneChangedHandler(Scene currentScene, Scene nextScene)
     {
         Debug.Log($"Moving from {currentScene} to {nextScene}");

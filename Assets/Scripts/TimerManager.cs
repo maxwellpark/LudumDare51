@@ -5,6 +5,8 @@ using UnityEngine.Events;
 public class TimerManager : StaticMonoBehaviour<TimerManager>
 {
     public TimeSpan CurrentTime { get; private set; }
+    public TimeSpan BestTime { get; private set; } = new TimeSpan(0, 0, 0);
+
     private float _secondsPast;
     private float _nextEventTimeInSeconds;
 
