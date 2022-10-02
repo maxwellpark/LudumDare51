@@ -45,6 +45,16 @@ public class TimerEffectManager : StaticMonoBehaviour<TimerEffectManager>
     {
         var index = Random.Range(0, AllTimerEffects.Count);
         var effect = AllTimerEffects.ElementAt(index);
+
+        if (effect is Buff)
+        {
+            SoundEffectManager.Instance.PlayEffectByName("PowerUp");
+        }
+        else if (effect is Debuff)
+        {
+            // Play debuff sound 
+        }
+
         effect.AddPower();
     }
 

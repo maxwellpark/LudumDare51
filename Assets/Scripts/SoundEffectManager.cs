@@ -4,10 +4,10 @@ using UnityEngine;
 public class SoundEffectManager : StaticMonoBehaviour<SoundEffectManager>
 {
     [SerializeField]
-    private AudioSource _sfxSrc;
+    private SoundEffect[] _effects;
 
     [SerializeField]
-    private SoundEffect[] _effects;
+    private float _audioSrcVolume = 0.75f;
 
     public void Init()
     {
@@ -17,12 +17,16 @@ public class SoundEffectManager : StaticMonoBehaviour<SoundEffectManager>
             return;
         }
 
+        // Create audio source for each scriptable object 
         foreach (var effect in _effects)
         {
             var obj = new GameObject(effect.effectName + " src");
             obj.transform.parent = transform;
             var src = obj.AddComponent<AudioSource>();
             src.loop = false;
+            src.volume = _audioSrcVolume;
+            src.enabled = true;
+            src.clip = effect.clip;
             effect.src = src;
         }
     }
