@@ -12,9 +12,9 @@ public class TripleJumpBuff : Buff
         _stats.AllowTripleJump = false;
     }
 
-    public override void Activate()
+    public override void AddPower()
     {
-        base.Activate();
+        base.AddPower();
         _stats.AllowTripleJump = true;
     }
 }

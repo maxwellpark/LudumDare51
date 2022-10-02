@@ -29,7 +29,7 @@ public class TimerUI : MonoBehaviour
         if (_timerManager.timerStopped)
             return;
 
-        _currentTimeTxt.text = $"{_timerManager.CurrentTime.ToString(@"mm\:ss\.fff")}";
-        _bestTimeTxt.text = $"{_timerManager.BestTime.ToString(@"mm\:ss\.fff")}";
+        _currentTimeTxt.text = $"{_timerManager.CurrentTime:mm\\:ss\\.fff}";
+        _bestTimeTxt.text = $"{_timerManager.BestTime:mm\\:ss\\.fff}";
     }
 }

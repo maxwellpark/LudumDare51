@@ -3,14 +3,20 @@ using UnityEngine.Tilemaps;
 
 public class TimerEffect : MonoBehaviour, ITimerEfect
 {
-    public virtual void Activate()
+    public virtual void AddPower()
     {
-        isActive = true;
+        if (!isActive)
+        {
+            isActive = true;
+        }
+
+        powerLevel++;
     }
 
     public bool isActive;
     protected Tilemap _tilemap;
     public string readableName;
+    public int powerLevel = 0;
 
     protected virtual void Awake()
     {

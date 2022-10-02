@@ -25,7 +25,6 @@ public class TimerManager : StaticMonoBehaviour<TimerManager>
         DontDestroyOnLoad(gameObject);
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         SceneManager.activeSceneChanged += (c, a) => Init();

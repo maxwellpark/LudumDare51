@@ -43,21 +43,11 @@ public class TimerEffectManager : StaticMonoBehaviour<TimerEffectManager>
 
     private void ActivateRandomEffect(bool isBuff)
     {
-        Debug.Log("Enabling random effect...");
-
         TimerEffect[] effects = isBuff ? _buffs : _debuffs;
 
-        var inactiveEffects = effects.Where(eff => !eff.isActive);
-
-        if (!inactiveEffects.Any())
-        {
-            Debug.LogWarning("No more available effects to activate.");
-            return;
-        }
-        var index = Random.Range(0, _debuffs.Count());
+        var index = Random.Range(0, effects.Count());
         var effect = effects.ElementAt(index);
-        Debug.Log("Enabling " + effect);
-        effect.Activate();
+        effect.AddPower();
     }
 
     private void OnEnable()

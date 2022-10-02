@@ -46,6 +46,11 @@ namespace TarodevController
             else if (Mathf.Abs(_player.Input.x) > 0.1f) _renderer.flipX = _player.Input.x < 0;
         }
 
+        public void MakePlayerInvisible()
+        {
+            _renderer.enabled = false;
+        }
+
         #region Ground Movement
 
         [Header("GROUND MOVEMENT")]

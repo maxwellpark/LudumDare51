@@ -7,9 +7,9 @@ public class HotFloorDebuff : EnvironmentDebuff
     private float _timeLimitInSeconds = 2.5f;
     private PlayerInteraction _interaction;
 
-    public override void Activate()
+    public override void AddPower()
     {
-        base.Activate();
+        base.AddPower();
         _interaction = _gameManager.player.GetComponent<PlayerInteraction>();
     }
 

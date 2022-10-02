@@ -25,7 +25,7 @@ public class TimerEffectsUI : MonoBehaviour
         string text = "Buffs\n";
         foreach (TimerEffect effect in TimerEffectManager.Instance.CurrentBuffs)
         {
-            text += $"{effect.readableName}\n";
+            text += $"{effect.readableName} {effect.powerLevel}\n";
         }
 
         buffsText.text = text;
@@ -36,7 +36,7 @@ public class TimerEffectsUI : MonoBehaviour
         string text = "Debuffs\n";
         foreach (TimerEffect effect in TimerEffectManager.Instance.CurrentDebuffs)
         {
-            text += $"{effect.readableName}\n";
+            text += $"{effect.readableName} {effect.powerLevel}\n";
         }
 
         debuffsText.text = text;

@@ -13,9 +13,9 @@ public class FallingSpikesDebuff : EnvironmentDebuff
     private float _timeDelayInSeconds = 1f;
     private float _timer;
 
-    public override void Activate()
+    public override void AddPower()
     {
-        base.Activate();
+        base.AddPower();
         SpawnSpike();
     }
 
@@ -54,7 +54,7 @@ public class FallingSpikesDebuff : EnvironmentDebuff
 
         _timer += Time.deltaTime;
 
-        if (_timer >= _timeDelayInSeconds)
+        if (_timer >= _timeDelayInSeconds / powerLevel)
         {
             SpawnSpike();
             _timer = 0f;

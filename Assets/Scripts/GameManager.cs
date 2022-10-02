@@ -1,3 +1,4 @@
+using TarodevController;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,23 +7,23 @@ public class GameManager : StaticMonoBehaviour<GameManager>
     [SerializeField]
     private GameData _gameData;
 
-    [HideInInspector]
     public GameObject player;
-
+    public PlayerAnimator playerAnimator;
+    
     public void RestartGame()
     {
         SceneManager.LoadSceneAsync(_gameData.mainSceneName);
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindWithTag("Player");
         var interaction = player.GetComponent<PlayerInteraction>();
         interaction.onPlayerKilled += RestartGame;
+
+        playerAnimator = player.GetComponentInChildren<PlayerAnimator>();
     }
 
-    // Update is called once per frame
     void Update()
     {
 

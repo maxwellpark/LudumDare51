@@ -1,4 +1,4 @@
 public interface ITimerEfect
 {
-    void Activate();
+    void AddPower();
 }
