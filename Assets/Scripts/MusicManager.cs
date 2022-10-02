@@ -1,54 +1,59 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum MusicState
 {
-    Battle, BattleEnd, Menu, None
+    Menu, InGame, None
 }
 
 public class MusicManager : StaticMonoBehaviour<MusicManager>
 {
     [SerializeField]
-    private AudioSource battleSrc;
-
-    [SerializeField]
-    private AudioSource battleEndSrc;
-
-    [SerializeField]
     private AudioSource menuSrc;
+
+    [SerializeField]
+    private AudioSource inGameSrc;
 
     private AudioSource _currentSrc;
 
     private Dictionary<MusicState, AudioSource> _srcMap;
-    private Dictionary<string, MusicState> _sceneMap;
 
     protected override void Awake()
     {
         base.Awake();
-        return; // Update this when we have audio sources
         menuSrc.enabled = true;
-        battleSrc.enabled = true;
-        battleEndSrc.enabled = true;
+        inGameSrc.enabled = true;
 
         _srcMap = new Dictionary<MusicState, AudioSource>
         {
-            { MusicState.Battle, battleSrc },
-            { MusicState.BattleEnd, battleEndSrc },
             { MusicState.Menu, menuSrc },
+            { MusicState.InGame, inGameSrc },
             { MusicState.None, null }
         };
+        _currentSrc = null;
+        SceneManager.activeSceneChanged += (c, a) => OnSceneChangedHandler();
+        PlayMusic(MusicState.InGame);
+    }
 
-        _sceneMap = new Dictionary<string, MusicState>
+    private void Start()
+    {
+    }
+
+    private void Init()
+    {
+        menuSrc.enabled = true;
+        inGameSrc.enabled = true;
+
+        _srcMap = new Dictionary<MusicState, AudioSource>
         {
-            { "BattleScene", MusicState.Battle },
-            { "BattleEndScene", MusicState.BattleEnd },
-            { "BattleMenuScene", MusicState.Menu },
-            { "TitleScreenScene", MusicState.Menu },
-            { "CharacterSelectScene", MusicState.Menu },
-            { "CreditsScene", MusicState.Menu },
-            { "TutorialScene", MusicState.Menu }
+            { MusicState.Menu, menuSrc },
+            { MusicState.InGame, inGameSrc },
+            { MusicState.None, null }
         };
         _currentSrc = null;
+        SceneManager.activeSceneChanged += (c, a) => OnSceneChangedHandler();
+        PlayMusic(MusicState.InGame);
     }
 
     public void PlayMusic(MusicState state)
@@ -63,10 +68,15 @@ public class MusicManager : StaticMonoBehaviour<MusicManager>
         _currentSrc = src;
     }
 
+    private void OnSceneChangedHandler()
+    {
+        PlayMusic(MusicState.InGame);
+    }
+
     private void ResetSrcs()
     {
-        battleSrc.Stop();
-        battleEndSrc.Stop();
+        menuSrc.Stop();
+        inGameSrc.Stop();
         menuSrc.Stop();
     }
 
@@ -95,10 +105,6 @@ public class MusicManager : StaticMonoBehaviour<MusicManager>
     public MusicState GetStateByScene(string sceneName)
     {
         Debug.Log("Getting music state for scene: " + sceneName);
-
-        if (_sceneMap.ContainsKey(sceneName))
-            return _sceneMap[sceneName];
-
         Debug.LogWarning("No key found in scene map with key: " + sceneName);
         return MusicState.None;
     }

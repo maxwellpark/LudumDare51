@@ -38,6 +38,11 @@ public class PlayerInteraction : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
         if (collision.gameObject == _tilemapManager.collidableTilemap.gameObject)
         {
             Debug.Log("Colliding with ground");

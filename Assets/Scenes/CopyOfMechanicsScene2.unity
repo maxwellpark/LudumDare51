@@ -183,6 +183,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DebuffManager
       objectReference: {fileID: 0}
+    - target: {fileID: 6522301105931235268, guid: 48134d5b43b24514581442b145f2deda, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 48134d5b43b24514581442b145f2deda, type: 3}
 --- !u!1 &399949580
@@ -724,10 +728,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 642494149014839285, guid: 0a7e3d7782d6c8c4497fc1f8f81c2067, type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 642494149348242961, guid: 0a7e3d7782d6c8c4497fc1f8f81c2067, type: 3}
       propertyPath: m_RootOrder
       value: 1
