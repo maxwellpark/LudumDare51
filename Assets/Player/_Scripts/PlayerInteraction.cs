@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Tilemaps;
@@ -9,11 +10,15 @@ public class PlayerInteraction : MonoBehaviour
     public bool touchingGround;
     public float timeOnGround;
     private TilemapManager _tilemapManager;
+    private SoundEffectManager _soundEffectManager;
+    [SerializeField]
+    private float _deathDelayInSeconds;
 
     // Start is called before the first frame update
     void Start()
     {
         _tilemapManager = TilemapManager.GetInstance();
+        _soundEffectManager = SoundEffectManager.GetInstance();
     }
 
     // Update is called once per frame
@@ -61,7 +66,14 @@ public class PlayerInteraction : MonoBehaviour
 
     public void KillPlayer()
     {
+        //_soundEffectManager.PlayEffectByName("TakeDamage");
+        //StartCoroutine(DelayBeforeDeath());
         onPlayerKilled?.Invoke();
         gameObject.SetActive(false);
+    }
+
+    private IEnumerator DelayBeforeDeath()
+    {
+        yield return new WaitForSeconds(_deathDelayInSeconds);
     }
 }
