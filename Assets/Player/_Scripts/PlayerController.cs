@@ -4,9 +4,11 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-namespace TarodevController {
+namespace TarodevController
+{
     [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
-    public class PlayerController : MonoBehaviour, IPlayerController {
+    public class PlayerController : MonoBehaviour, IPlayerController
+    {
         [SerializeField] private ScriptableStats _stats;
 
         #region Internal
@@ -34,6 +36,7 @@ namespace TarodevController {
         public event Action<bool> LedgeClimbChanged;
         public event Action<bool> Jumped;
         public event Action DoubleJumped;
+        public event Action TripleJumped;
         public event Action Attacked;
         public ScriptableStats PlayerStats => _stats;
         public Vector2 Input => _frameInput.Move;
@@ -45,27 +48,32 @@ namespace TarodevController {
         public bool GrabbingLedge => _grabbingLedge;
         public bool ClimbingLedge => _climbingLedge;
 
-        public virtual void ApplyVelocity(Vector2 vel, PlayerForce forceType) {
+        public virtual void ApplyVelocity(Vector2 vel, PlayerForce forceType)
+        {
             if (forceType == PlayerForce.Burst) _speed += vel;
             else _currentExternalVelocity += vel;
         }
 
-        public virtual void TakeAwayControl(bool resetVelocity = true) {
-            if (resetVelocity) {
+        public virtual void TakeAwayControl(bool resetVelocity = true)
+        {
+            if (resetVelocity)
+            {
                 _rb.velocity = Vector2.zero;
             }
 
             _hasControl = false;
         }
 
-        public virtual void ReturnControl() {
+        public virtual void ReturnControl()
+        {
             _speed = Vector2.zero;
             _hasControl = true;
         }
 
         #endregion
 
-        protected virtual void Awake() {
+        protected virtual void Awake()
+        {
             _rb = GetComponent<Rigidbody2D>();
             _input = GetComponent<PlayerInput>();
             _cols = GetComponents<CapsuleCollider2D>();
@@ -80,14 +88,17 @@ namespace TarodevController {
             SetCrouching(false);
         }
 
-        protected virtual void Update() {
+        protected virtual void Update()
+        {
             GatherInput();
         }
 
-        protected virtual void GatherInput() {
+        protected virtual void GatherInput()
+        {
             _frameInput = _input.FrameInput;
 
-            if (_frameInput.JumpDown) {
+            if (_frameInput.JumpDown)
+            {
                 _jumpToConsume = true;
                 _frameJumpWasPressed = _fixedFrame;
             }
@@ -96,7 +107,8 @@ namespace TarodevController {
             if (_frameInput.AttackDown && _stats.AllowAttacks) _attackToConsume = true;
         }
 
-        protected virtual void FixedUpdate() {
+        protected virtual void FixedUpdate()
+        {
             _fixedFrame++;
 
             CheckCollisions();
@@ -104,12 +116,12 @@ namespace TarodevController {
             HandleWalls();
             HandleLedges();
             HandleLadders();
-            
+
             HandleCrouching();
             HandleJump();
             HandleDash();
             HandleAttacking();
-            
+
             HandleHorizontal();
             HandleVertical();
             ApplyVelocity();
@@ -128,9 +140,10 @@ namespace TarodevController {
         private int _frameLeftGrounded = int.MinValue;
         private bool _grounded;
 
-        protected virtual void CheckCollisions() {
+        protected virtual void CheckCollisions()
+        {
             Physics2D.queriesHitTriggers = false;
-            
+
             // Ground and Ceiling
             var origin = (Vector2)transform.position + _col.offset;
             _groundHitCount = Physics2D.CapsuleCastNonAlloc(origin, _col.size, _col.direction, 0, Vector2.down, _groundHits, _stats.GrounderDistance, ~_stats.PlayerLayer);
@@ -145,24 +158,28 @@ namespace TarodevController {
             Physics2D.queriesHitTriggers = _cachedTriggerSetting;
         }
 
-        private Bounds GetWallDetectionBounds() {
+        private Bounds GetWallDetectionBounds()
+        {
             var colliderOrigin = transform.position + _standingColliderBounds.center;
             return new Bounds(colliderOrigin, _stats.WallDetectorSize);
         }
 
-        protected virtual void HandleCollisions() {
+        protected virtual void HandleCollisions()
+        {
             // Hit a Ceiling
             if (_speed.y > 0 && _ceilingHitCount > 0) _speed.y = 0;
 
             // Landed on the Ground
-            if (!_grounded && _groundHitCount > 0) {
+            if (!_grounded && _groundHitCount > 0)
+            {
                 _grounded = true;
                 ResetDash();
                 ResetJump();
                 GroundedChanged?.Invoke(true, Mathf.Abs(_speed.y));
             }
             // Left the Ground
-            else if (_grounded && _groundHitCount == 0) {
+            else if (_grounded && _groundHitCount == 0)
+            {
                 _grounded = false;
                 _frameLeftGrounded = _fixedFrame;
                 GroundedChanged?.Invoke(false, 0);
@@ -177,7 +194,8 @@ namespace TarodevController {
         private int _wallDir;
         private bool _isOnWall;
 
-        protected virtual void HandleWalls() {
+        protected virtual void HandleWalls()
+        {
             if (!_stats.AllowWalls) return;
 
             _currentWallJumpMoveMultiplier = Mathf.MoveTowards(_currentWallJumpMoveMultiplier, 1f, 1f / _stats.WallJumpInputLossFrames);
@@ -188,14 +206,16 @@ namespace TarodevController {
             if (!_isOnWall && ShouldStickToWall()) SetOnWall(true);
             else if (_isOnWall && !ShouldStickToWall()) SetOnWall(false);
 
-            bool ShouldStickToWall() {
+            bool ShouldStickToWall()
+            {
                 if (_wallDir == 0 || _grounded) return false;
                 if (_stats.RequireInputPush) return Mathf.Sign(_frameInput.Move.x) == _wallDir;
                 return true;
             }
         }
 
-        private void SetOnWall(bool on) {
+        private void SetOnWall(bool on)
+        {
             _isOnWall = on;
             if (on) _speed = Vector2.zero;
             WallGrabChanged?.Invoke(on);
@@ -212,23 +232,28 @@ namespace TarodevController {
         private bool CanEnterLadder => _ladderHitCount > 0 && _fixedFrame > _frameLeftLadder + _stats.LadderCooldownFrames;
         private bool LadderInputReached => Mathf.Abs(_frameInput.Move.y) > _stats.LadderClimbThreshold;
 
-        protected virtual void HandleLadders() {
+        protected virtual void HandleLadders()
+        {
             if (!_onLadder && CanEnterLadder && LadderInputReached) ToggleClimbingLadders(true);
             else if (_onLadder && _ladderHitCount == 0) ToggleClimbingLadders(false);
 
             // Snap to center of ladder
-            if (_onLadder && _frameInput.Move.x == 0 && _stats.SnapToLadders && _hasControl) {
+            if (_onLadder && _frameInput.Move.x == 0 && _stats.SnapToLadders && _hasControl)
+            {
                 var pos = _rb.position;
                 _rb.position = Vector2.SmoothDamp(pos, new Vector2(_ladderHits[0].transform.position.x, pos.y), ref _ladderSnapVel, _stats.LadderSnapSpeed);
             }
         }
 
-        private void ToggleClimbingLadders(bool on) {
-            if (on) {
+        private void ToggleClimbingLadders(bool on)
+        {
+            if (on)
+            {
                 _onLadder = true;
                 _speed = Vector2.zero;
             }
-            else {
+            else
+            {
                 if (!_onLadder) return;
                 _frameLeftLadder = _fixedFrame;
                 _onLadder = false;
@@ -243,15 +268,17 @@ namespace TarodevController {
         private bool _grabbingLedge;
         private bool _climbingLedge;
 
-        protected virtual void HandleLedges() {
+        protected virtual void HandleLedges()
+        {
             if (_climbingLedge || !_isOnWall) return;
 
             _grabbingLedge = TryGetLedgeCorner(out _ledgeCornerPos);
 
             if (_grabbingLedge) HandleLedgeGrabbing();
         }
-        
-        protected virtual bool TryGetLedgeCorner(out Vector2 cornerPos) {
+
+        protected virtual bool TryGetLedgeCorner(out Vector2 cornerPos)
+        {
             cornerPos = Vector2.zero;
             Vector2 grabHeight = _rb.position + _stats.LedgeGrabPoint.y * Vector2.up;
 
@@ -263,16 +290,18 @@ namespace TarodevController {
 
             var hit3 = Physics2D.Raycast(grabHeight + new Vector2(_wallDir * 0.5f, _stats.LedgeRaycastSpacing), Vector2.down, 0.5f, _stats.ClimbableLayer);
             if (!hit3.collider) return false; // gets our yPos of the corner
-            
+
             cornerPos = new Vector2(hit1.point.x, hit3.point.y);
             return true;
         }
 
-        protected virtual void HandleLedgeGrabbing() {
+        protected virtual void HandleLedgeGrabbing()
+        {
             // Snap to ledge position
             var xInput = _frameInput.Move.x;
             var yInput = _frameInput.Move.y;
-            if (yInput != 0 && (xInput == 0 || Mathf.Sign(xInput) == _wallDir) && _hasControl) {
+            if (yInput != 0 && (xInput == 0 || Mathf.Sign(xInput) == _wallDir) && _hasControl)
+            {
                 var pos = _rb.position;
                 var targetPos = _ledgeCornerPos - Vector2.Scale(_stats.LedgeGrabPoint, new(_wallDir, 1f));
                 _rb.position = Vector2.MoveTowards(pos, targetPos, _stats.LedgeGrabDeceleration * Time.fixedDeltaTime);
@@ -283,7 +312,8 @@ namespace TarodevController {
                 StartCoroutine(ClimbLedge());
         }
 
-        protected virtual IEnumerator ClimbLedge() {
+        protected virtual IEnumerator ClimbLedge()
+        {
             LedgeClimbChanged?.Invoke(true);
             _climbingLedge = true;
 
@@ -300,7 +330,7 @@ namespace TarodevController {
             _grabbingLedge = false;
             SetOnWall(false);
 
-            targetPos = _ledgeCornerPos +  Vector2.Scale(_stats.StandUpOffset, new(_wallDir, 1f));
+            targetPos = _ledgeCornerPos + Vector2.Scale(_stats.StandUpOffset, new(_wallDir, 1f));
             transform.position = targetPos;
             ReturnControl();
         }
@@ -315,12 +345,14 @@ namespace TarodevController {
 
         protected virtual bool CrouchPressed => _frameInput.Move.y <= _stats.CrouchInputThreshold;
 
-        protected virtual void HandleCrouching() {
+        protected virtual void HandleCrouching()
+        {
             if (_crouching && _onLadder) SetCrouching(false); // use standing collider when on ladder
             else if (_crouching != CrouchPressed) SetCrouching(!_crouching);
         }
 
-        protected virtual void SetCrouching(bool active) {
+        protected virtual void SetCrouching(bool active)
+        {
             if (!_crouching && (_onLadder || _isOnWall)) return; // Prevent crouching if climbing
             if (_crouching && !CanStandUp()) return; // Prevent standing into colliders
 
@@ -332,10 +364,11 @@ namespace TarodevController {
             if (_crouching) _frameStartedCrouching = _fixedFrame;
         }
 
-        protected bool CanStandUp() {
+        protected bool CanStandUp()
+        {
             var pos = _rb.position + (Vector2)_standingColliderBounds.center + new Vector2(0, _standingColliderBounds.extents.y);
             var size = new Vector2(_standingColliderBounds.size.x, _stats.CrouchBufferCheck);
-            
+
             Physics2D.queriesHitTriggers = false;
             var hits = Physics2D.OverlapBoxNonAlloc(pos, size, 0, _crouchHits, ~_stats.PlayerLayer);
             Physics2D.queriesHitTriggers = _cachedTriggerSetting;
@@ -351,26 +384,32 @@ namespace TarodevController {
         private bool _endedJumpEarly;
         private bool _coyoteUsable;
         private bool _doubleJumpUsable;
+        private bool _tripleJumpUsable;
         private bool _bufferedJumpUsable;
         private int _frameJumpWasPressed = int.MinValue;
 
         private bool CanUseCoyote => _coyoteUsable && !_grounded && _fixedFrame < _frameLeftGrounded + _stats.CoyoteFrames;
         private bool HasBufferedJump => _bufferedJumpUsable && _fixedFrame < _frameJumpWasPressed + _stats.JumpBufferFrames;
-        private bool CanDoubleJump => _doubleJumpUsable &&  _stats.AllowDoubleJump;
+        private bool CanDoubleJump => _doubleJumpUsable && _stats.AllowDoubleJump;
+        private bool CanTripleJump => _tripleJumpUsable && _stats.AllowTripleJump;
 
-        protected virtual void HandleJump() {
-            if (_jumpToConsume || HasBufferedJump) {
+        protected virtual void HandleJump()
+        {
+            if (_jumpToConsume || HasBufferedJump)
+            {
                 if (_grounded || _onLadder || CanUseCoyote) NormalJump();
                 else if (_isOnWall) WallJump();
                 else if (_jumpToConsume && CanDoubleJump) DoubleJump();
+                else if (_jumpToConsume && CanTripleJump) TripleJump();
             }
-            
+
             _jumpToConsume = false; // Always consume the flag
 
             if (!_endedJumpEarly && !_grounded && !_frameInput.JumpHeld && _rb.velocity.y > 0) _endedJumpEarly = true; // Early end detection
         }
 
-        protected virtual void NormalJump() {
+        protected virtual void NormalJump()
+        {
             _endedJumpEarly = false;
             _bufferedJumpUsable = false;
             _coyoteUsable = false;
@@ -380,7 +419,8 @@ namespace TarodevController {
             Jumped?.Invoke(false);
         }
 
-        protected virtual void WallJump() {
+        protected virtual void WallJump()
+        {
             _endedJumpEarly = false;
             _bufferedJumpUsable = false;
             _doubleJumpUsable = true; // note: double jump isn't currently refreshed after detaching from wall w/o jumping
@@ -390,17 +430,29 @@ namespace TarodevController {
             Jumped?.Invoke(true);
         }
 
-        protected virtual void DoubleJump() {
+        protected virtual void DoubleJump()
+        {
             _endedJumpEarly = false;
             _doubleJumpUsable = false;
+            _tripleJumpUsable = true;
             _speed.y = _stats.JumpPower;
             DoubleJumped?.Invoke();
         }
 
-        protected virtual void ResetJump() {
+        protected virtual void TripleJump()
+        {
+            _endedJumpEarly = false;
+            _tripleJumpUsable = false;
+            _speed.y = _stats.JumpPower;
+            TripleJumped?.Invoke();
+        }
+
+        protected virtual void ResetJump()
+        {
             _coyoteUsable = true;
             _bufferedJumpUsable = true;
             _doubleJumpUsable = false;
+            _tripleJumpUsable = false;
             _endedJumpEarly = false;
         }
 
@@ -414,10 +466,13 @@ namespace TarodevController {
         private bool _dashing;
         private int _startedDashing;
 
-        protected virtual void HandleDash() {
-            if (_dashToConsume && _canDash && !_crouching) {
+        protected virtual void HandleDash()
+        {
+            if (_dashToConsume && _canDash && !_crouching)
+            {
                 var dir = new Vector2(_frameInput.Move.x, Mathf.Max(_frameInput.Move.y, 0f)).normalized;
-                if (dir == Vector2.zero) {
+                if (dir == Vector2.zero)
+                {
                     _dashToConsume = false;
                     return;
                 }
@@ -432,10 +487,12 @@ namespace TarodevController {
                 _currentExternalVelocity = Vector2.zero;
             }
 
-            if (_dashing) {
+            if (_dashing)
+            {
                 _speed = _dashVel;
                 // Cancel when the time is out or we've reached our max safety distance
-                if (_fixedFrame > _startedDashing + _stats.DashDurationFrames) {
+                if (_fixedFrame > _startedDashing + _stats.DashDurationFrames)
+                {
                     _dashing = false;
                     DashingChanged?.Invoke(false, Vector2.zero);
                     if (_speed.y > 0) _speed.y = 0;
@@ -447,7 +504,8 @@ namespace TarodevController {
             _dashToConsume = false;
         }
 
-        protected virtual void ResetDash() {
+        protected virtual void ResetDash()
+        {
             _canDash = true;
         }
 
@@ -458,10 +516,12 @@ namespace TarodevController {
         private bool _attackToConsume;
         private int _frameLastAttacked = int.MinValue;
 
-        protected virtual void HandleAttacking() {
+        protected virtual void HandleAttacking()
+        {
             if (!_attackToConsume) return;
 
-            if (_fixedFrame > _frameLastAttacked + _stats.AttackFrameCooldown) {
+            if (_fixedFrame > _frameLastAttacked + _stats.AttackFrameCooldown)
+            {
                 _frameLastAttacked = _fixedFrame;
                 Attacked?.Invoke();
             }
@@ -473,17 +533,21 @@ namespace TarodevController {
 
         #region Horizontal
 
-        protected virtual void HandleHorizontal() {
+        protected virtual void HandleHorizontal()
+        {
             if (_dashing) return;
-            
-            if (_frameInput.Move.x != 0) {
-                if (_crouching && _grounded) {
+
+            if (_frameInput.Move.x != 0)
+            {
+                if (_crouching && _grounded)
+                {
                     var crouchPoint = Mathf.InverseLerp(0, _stats.CrouchSlowdownFrames, _fixedFrame - _frameStartedCrouching);
                     var diminishedMaxSpeed = _stats.MaxSpeed * Mathf.Lerp(1, _stats.CrouchSpeedPenalty, crouchPoint);
 
                     _speed.x = Mathf.MoveTowards(_speed.x, diminishedMaxSpeed * _frameInput.Move.x, _stats.GroundDeceleration * Time.fixedDeltaTime);
                 }
-                else {
+                else
+                {
                     // Prevent useless horizontal speed buildup when against a wall
                     if (_wallHitCount > 0 && Mathf.Approximately(_rb.velocity.x, 0) && Mathf.Sign(_frameInput.Move.x) == Mathf.Sign(_speed.x))
                         _speed.x = 0;
@@ -502,11 +566,13 @@ namespace TarodevController {
 
         private Vector2 _groundNormal;
 
-        protected virtual void HandleVertical() {
+        protected virtual void HandleVertical()
+        {
             if (_dashing) return;
 
             // Ladder
-            if (_onLadder) {
+            if (_onLadder)
+            {
                 var inputY = _frameInput.Move.y;
                 _speed.y = inputY * (inputY > 0 ? _stats.LadderClimbSpeed : _stats.LadderSlideSpeed);
 
@@ -514,17 +580,20 @@ namespace TarodevController {
             }
 
             // Grounded & Slopes
-            if (_grounded && _speed.y <= 0f) {
+            if (_grounded && _speed.y <= 0f)
+            {
                 _speed.y = _stats.GroundingForce;
 
                 // We use a raycast here as the groundHits from capsule cast act a bit weird.
                 Physics2D.queriesHitTriggers = false;
                 var hit = Physics2D.Raycast(transform.position, Vector2.down, _stats.GrounderDistance * 2, ~_stats.PlayerLayer);
                 Physics2D.queriesHitTriggers = _cachedTriggerSetting;
-                if (hit.collider != null) {
+                if (hit.collider != null)
+                {
                     _groundNormal = hit.normal;
 
-                    if (!Mathf.Approximately(_groundNormal.y, 1f)) { // on a slope
+                    if (!Mathf.Approximately(_groundNormal.y, 1f))
+                    { // on a slope
                         _speed.y = _speed.x * -_groundNormal.x / _groundNormal.y;
                         if (_speed.x != 0) _speed.y += _stats.GroundingForce;
                     }
@@ -536,7 +605,8 @@ namespace TarodevController {
             }
 
             // Wall Climbing & Sliding
-            if (_isOnWall) {
+            if (_isOnWall)
+            {
                 if (_frameInput.Move.y > 0) _speed.y = _stats.WallClimbSpeed;
                 else if (_frameInput.Move.y < 0) _speed.y = -_stats.MaxWallFallSpeed; // TODO: new stat variable for better feel?
                 else if (_grabbingLedge) _speed.y = Mathf.MoveTowards(_speed.y, 0, _stats.LedgeGrabDeceleration * Time.fixedDeltaTime);
@@ -553,7 +623,8 @@ namespace TarodevController {
 
         #endregion
 
-        protected virtual void ApplyVelocity() {
+        protected virtual void ApplyVelocity()
+        {
             if (!_hasControl) return;
             _rb.velocity = _speed + _currentExternalVelocity;
 
@@ -561,13 +632,16 @@ namespace TarodevController {
         }
 
 #if UNITY_EDITOR
-        private void OnDrawGizmos() {
-            if (_stats.ShowWallDetection) {
+        private void OnDrawGizmos()
+        {
+            if (_stats.ShowWallDetection)
+            {
                 Gizmos.color = Color.white;
                 var bounds = GetWallDetectionBounds();
                 Gizmos.DrawWireCube(bounds.center, bounds.size);
             }
-            if (_stats.ShowLedgeDetection) {
+            if (_stats.ShowLedgeDetection)
+            {
                 Gizmos.color = Color.red;
                 var facingDir = Mathf.Sign(_wallDir);
                 var grabHeight = transform.position + _stats.LedgeGrabPoint.y * Vector3.up;
@@ -581,7 +655,8 @@ namespace TarodevController {
 #endif
     }
 
-    public interface IPlayerController {
+    public interface IPlayerController
+    {
         /// <summary>
         /// true = Landed. false = Left the Ground. float is Impact Speed
         /// </summary>
@@ -591,6 +666,7 @@ namespace TarodevController {
         public event Action<bool> LedgeClimbChanged;
         public event Action<bool> Jumped; // Is wall jump
         public event Action DoubleJumped;
+        public event Action TripleJumped;
         public event Action Attacked;
 
         public ScriptableStats PlayerStats { get; }
@@ -605,7 +681,8 @@ namespace TarodevController {
         public void ApplyVelocity(Vector2 vel, PlayerForce forceType);
     }
 
-    public enum PlayerForce {
+    public enum PlayerForce
+    {
         /// <summary>
         /// Added directly to the players movement speed, to be controlled by the standard deceleration
         /// </summary>

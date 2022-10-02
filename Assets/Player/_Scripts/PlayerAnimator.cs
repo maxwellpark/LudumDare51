@@ -1,31 +1,37 @@
 using UnityEngine;
 
-namespace TarodevController {
+namespace TarodevController
+{
     [RequireComponent(typeof(Animator), typeof(SpriteRenderer))]
-    public class PlayerAnimator : MonoBehaviour {
+    public class PlayerAnimator : MonoBehaviour
+    {
         private IPlayerController _player;
         private Animator _anim;
         private SpriteRenderer _renderer;
         private AudioSource _source;
 
-        private void Awake() {
+        private void Awake()
+        {
             _player = GetComponentInParent<IPlayerController>();
             _anim = GetComponent<Animator>();
             _renderer = GetComponent<SpriteRenderer>();
             _source = GetComponent<AudioSource>();
         }
 
-        private void Start() {
+        private void Start()
+        {
             _player.GroundedChanged += OnGroundedChanged;
             _player.WallGrabChanged += OnWallGrabChanged;
             _player.DashingChanged += OnDashingChanged;
             _player.LedgeClimbChanged += OnLedgeClimbChanged;
             _player.Jumped += OnJumped;
             _player.DoubleJumped += OnDoubleJumped;
+            _player.TripleJumped += OnTripleJumped;
             _player.Attacked += OnAttacked;
         }
 
-        private void Update() {
+        private void Update()
+        {
             HandleSpriteFlipping();
             HandleGroundEffects();
             HandleWallSlideEffects();
@@ -33,7 +39,8 @@ namespace TarodevController {
             HandleAnimations();
         }
 
-        private void HandleSpriteFlipping() {
+        private void HandleSpriteFlipping()
+        {
             if (_player.ClimbingLedge) return;
             if (_player.WallDirection != 0) _renderer.flipX = _player.WallDirection == -1;
             else if (Mathf.Abs(_player.Input.x) > 0.1f) _renderer.flipX = _player.Input.x < 0;
@@ -41,14 +48,15 @@ namespace TarodevController {
 
         #region Ground Movement
 
-        [Header("GROUND MOVEMENT")] 
+        [Header("GROUND MOVEMENT")]
         [SerializeField] private ParticleSystem _moveParticles;
         [SerializeField] private float _tiltChangeSpeed = .05f;
         [SerializeField] private AudioClip[] _footstepClips;
         private ParticleSystem.MinMaxGradient _currentGradient;
         private Vector2 _tiltVelocity;
 
-        private void HandleGroundEffects() {
+        private void HandleGroundEffects()
+        {
             // Move particles get bigger as you gain momentum
             var speedPoint = Mathf.InverseLerp(0, _player.PlayerStats.MaxSpeed, Mathf.Abs(_player.Speed.x));
             _moveParticles.transform.localScale = Vector3.MoveTowards(_moveParticles.transform.localScale, Vector3.one * speedPoint, 2 * Time.deltaTime);
@@ -59,7 +67,8 @@ namespace TarodevController {
 
         private int _stepIndex = 0;
 
-        public void PlayFootstep() {
+        public void PlayFootstep()
+        {
             _stepIndex = (_stepIndex + 1) % _footstepClips.Length;
             PlaySound(_footstepClips[_stepIndex], 0.01f);
         }
@@ -68,7 +77,7 @@ namespace TarodevController {
 
         #region Wall Sliding and Climbing
 
-        [Header("WALL")] 
+        [Header("WALL")]
         [SerializeField] private float _wallHitAnimTime = 0.167f;
         [SerializeField] private ParticleSystem _wallSlideParticles;
         [SerializeField] private AudioSource _wallSlideSource;
@@ -79,18 +88,22 @@ namespace TarodevController {
 
         private bool _hitWall, _isOnWall, _isSliding;
 
-        private void OnWallGrabChanged(bool onWall) {
+        private void OnWallGrabChanged(bool onWall)
+        {
             _hitWall = _isOnWall = onWall;
         }
 
-        private void HandleWallSlideEffects() {
+        private void HandleWallSlideEffects()
+        {
             var slidingThisFrame = _isOnWall && !_grounded && _player.Speed.y < 0;
 
-            if (!_isSliding && slidingThisFrame) {
+            if (!_isSliding && slidingThisFrame)
+            {
                 _isSliding = true;
                 _wallSlideParticles.Play();
             }
-            else if (_isSliding && !slidingThisFrame) {
+            else if (_isSliding && !slidingThisFrame)
+            {
                 _isSliding = false;
                 _wallSlideParticles.Stop();
             }
@@ -105,7 +118,8 @@ namespace TarodevController {
 
         private int _wallClimbIndex = 0;
 
-        public void PlayWallClimbSound() {
+        public void PlayWallClimbSound()
+        {
             _wallClimbIndex = (_wallClimbIndex + 1) % _wallClimbClips.Length;
             PlaySound(_wallClimbClips[_wallClimbIndex], 0.1f);
         }
@@ -117,7 +131,8 @@ namespace TarodevController {
         //[Header("LEDGE")]
         private bool _isLedgeClimbing;
 
-        private void OnLedgeClimbChanged(bool isLedgeClimbing) {
+        private void OnLedgeClimbChanged(bool isLedgeClimbing)
+        {
             _isLedgeClimbing = isLedgeClimbing;
             if (!isLedgeClimbing) _grounded = true;
             UnlockAnimationLock(); // unlocks the LockState, so that ledge climbing animation doesn't get skipped and so we can exit when told to do so
@@ -126,14 +141,15 @@ namespace TarodevController {
         }
 
         #endregion
-        
+
         #region Ladders
-        
+
         [Header("LADDER")]
         [SerializeField] private AudioClip[] _ladderClips;
         private int _climbIndex = 0;
 
-        public void PlayLadderClimbClip() {
+        public void PlayLadderClimbClip()
+        {
             if (_player.Speed.y < 0) return;
             _climbIndex = (_climbIndex + 1) % _ladderClips.Length;
             PlaySound(_ladderClips[_climbIndex], 0.07f);
@@ -143,19 +159,22 @@ namespace TarodevController {
 
         #region Dash
 
-        [Header("DASHING")] 
+        [Header("DASHING")]
         [SerializeField] private AudioClip _dashClip;
         [SerializeField] private ParticleSystem _dashParticles, _dashRingParticles;
         [SerializeField] private Transform _dashRingTransform;
 
-        private void OnDashingChanged(bool dashing, Vector2 dir) {
-            if (dashing) {
+        private void OnDashingChanged(bool dashing, Vector2 dir)
+        {
+            if (dashing)
+            {
                 _dashRingTransform.up = dir;
                 _dashRingParticles.Play();
                 _dashParticles.Play();
                 PlaySound(_dashClip, 0.1f);
             }
-            else {
+            else
+            {
                 _dashParticles.Stop();
             }
         }
@@ -164,7 +183,7 @@ namespace TarodevController {
 
         #region Jumping and Landing
 
-        [Header("JUMPING")] 
+        [Header("JUMPING")]
         [SerializeField] private float _minImpactForce = 20;
         [SerializeField] private float _landAnimDuration = 0.1f;
         [SerializeField] private AudioClip _landClip, _jumpClip, _doubleJumpClip;
@@ -175,9 +194,10 @@ namespace TarodevController {
         private bool _landed;
         private bool _grounded;
 
-        private void OnJumped(bool wallJumped) {
+        private void OnJumped(bool wallJumped)
+        {
             if (_player.ClimbingLedge) return;
-            
+
             _jumpTriggered = true;
             PlaySound(_jumpClip, 0.05f, Random.Range(0.98f, 1.02f));
 
@@ -188,15 +208,24 @@ namespace TarodevController {
             _jumpParticles.Play();
         }
 
-        private void OnDoubleJumped() {
+        private void OnDoubleJumped()
+        {
             PlaySound(_doubleJumpClip, 0.1f);
             _doubleJumpParticles.Play();
         }
 
-        private void OnGroundedChanged(bool grounded, float impactForce) {
+        private void OnTripleJumped()
+        {
+            PlaySound(_doubleJumpClip, 0.1f);
+            _doubleJumpParticles.Play();
+        }
+
+        private void OnGroundedChanged(bool grounded, float impactForce)
+        {
             _grounded = grounded;
 
-            if (impactForce >= _minImpactForce) {
+            if (impactForce >= _minImpactForce)
+            {
                 var p = Mathf.InverseLerp(0, _minImpactForce, impactForce);
                 _landed = true;
                 _landParticles.transform.localScale = p * Vector3.one;
@@ -213,12 +242,13 @@ namespace TarodevController {
 
         #region Attack
 
-        [Header("ATTACK")] 
+        [Header("ATTACK")]
         [SerializeField] private float _attackAnimTime = 0.25f;
         [SerializeField] private AudioClip _attackClip;
         private bool _attacked;
 
-        private void OnAttacked() {
+        private void OnAttacked()
+        {
             _attacked = true;
             PlaySound(_attackClip, 0.1f, Random.Range(0.97f, 1.03f));
         }
@@ -229,18 +259,21 @@ namespace TarodevController {
 
         private float _lockedTill;
 
-        private void HandleAnimations() {
+        private void HandleAnimations()
+        {
             var state = GetState();
             ResetFlags();
             if (state == _currentState) return;
-            
+
             _anim.Play(state, 0); //_anim.CrossFade(state, 0, 0);
             _currentState = state;
 
-            int GetState() {
+            int GetState()
+            {
                 if (Time.time < _lockedTill) return _currentState;
 
-                if (_player.ClimbingLadder) {
+                if (_player.ClimbingLadder)
+                {
                     if (_player.Speed.y == 0) return ClimbIdle;
                     return Climb;
                 }
@@ -248,9 +281,11 @@ namespace TarodevController {
                 if (_isLedgeClimbing) return LockState(LedgeClimb, _player.PlayerStats.LedgeClimbDuration);
                 if (_attacked) return LockState(Attack, _attackAnimTime);
 
-                if (!_grounded) {
+                if (!_grounded)
+                {
                     if (_hitWall) return LockState(WallHit, _wallHitAnimTime);
-                    if (_isOnWall) {
+                    if (_isOnWall)
+                    {
                         if (_player.Speed.y < 0) return WallSlide;
                         if (_player.GrabbingLedge) return LedgeGrab; // does this priority order give the right feel/look?
                         if (_player.Speed.y > 0) return WallClimb;
@@ -265,13 +300,15 @@ namespace TarodevController {
                 if (_grounded) return _player.Input.x == 0 ? Idle : Walk;
                 return _player.Speed.y > 0 ? Jump : Fall;
 
-                int LockState(int s, float t) {
+                int LockState(int s, float t)
+                {
                     _lockedTill = Time.time + t;
                     return s;
                 }
             }
 
-            void ResetFlags() {
+            void ResetFlags()
+            {
                 _jumpTriggered = false;
                 _landed = false;
                 _attacked = false;
@@ -294,12 +331,12 @@ namespace TarodevController {
         private static readonly int Crouch = Animator.StringToHash("Crouch");
         private static readonly int ClimbIdle = Animator.StringToHash("ClimbIdle");
         private static readonly int Climb = Animator.StringToHash("Climb");
-        
+
         private static readonly int WallHit = Animator.StringToHash("WallHit");
         private static readonly int WallIdle = Animator.StringToHash("WallIdle");
         private static readonly int WallClimb = Animator.StringToHash("WallClimb");
         private static readonly int WallSlide = Animator.StringToHash("WallSlide");
-        
+
         private static readonly int LedgeGrab = Animator.StringToHash("LedgeGrab");
         private static readonly int LedgeClimb = Animator.StringToHash("LedgeClimb");
 
@@ -311,9 +348,11 @@ namespace TarodevController {
 
         private readonly RaycastHit2D[] _groundHits = new RaycastHit2D[2];
 
-        private void SetParticleColor(Vector2 detectionDir, ParticleSystem system) {
+        private void SetParticleColor(Vector2 detectionDir, ParticleSystem system)
+        {
             var hitCount = Physics2D.RaycastNonAlloc(transform.position, detectionDir, _groundHits, 2);
-            for (var i = 0; i < hitCount; i++) {
+            for (var i = 0; i < hitCount; i++)
+            {
                 var hit = _groundHits[i];
                 if (!hit.collider || hit.collider.isTrigger || !hit.transform.TryGetComponent(out SpriteRenderer r)) continue;
                 var color = r.color;
@@ -323,7 +362,8 @@ namespace TarodevController {
             }
         }
 
-        private void SetColor(ParticleSystem ps) {
+        private void SetColor(ParticleSystem ps)
+        {
             var main = ps.main;
             main.startColor = _currentGradient;
         }
@@ -332,7 +372,8 @@ namespace TarodevController {
 
         #region Audio
 
-        private void PlaySound(AudioClip clip, float volume = 1, float pitch = 1) {
+        private void PlaySound(AudioClip clip, float volume = 1, float pitch = 1)
+        {
             _source.pitch = pitch;
             _source.PlayOneShot(clip, volume);
         }

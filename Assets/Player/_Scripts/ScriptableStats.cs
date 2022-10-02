@@ -1,9 +1,11 @@
 using UnityEngine;
 
-namespace TarodevController {
+namespace TarodevController
+{
     [CreateAssetMenu]
-    public class ScriptableStats : ScriptableObject {
-        [Header("MOVEMENT")] 
+    public class ScriptableStats : ScriptableObject
+    {
+        [Header("MOVEMENT")]
         [Tooltip("The top horizontal movement speed")]
         public float MaxSpeed = 14;
 
@@ -19,7 +21,7 @@ namespace TarodevController {
         [Tooltip("A constant downward force applied while grounded. Helps on vertical moving platforms and slopes"), Range(0f, -10f)]
         public float GroundingForce = -1.5f;
 
-        [Header("CROUCHING")] 
+        [Header("CROUCHING")]
         [Tooltip("A dead-zone for controllers to prevent unintended crouching")]
         public float CrouchInputThreshold = -0.5f;
 
@@ -32,9 +34,12 @@ namespace TarodevController {
         [Tooltip("Detection height offset from the top of the standing collider. Smaller values risk collisions when standing up")]
         public float CrouchBufferCheck = 0.1f;
 
-        [Header("JUMP")] 
+        [Header("JUMP")]
         [Tooltip("Enable double jump")]
         public bool AllowDoubleJump = true;
+
+        [Tooltip("Enable triple jump")]
+        public bool AllowTripleJump = true;
 
         [Tooltip("The immediate velocity applied when jumping")]
         public float JumpPower = 36;
@@ -53,20 +58,20 @@ namespace TarodevController {
 
         [Tooltip("The amount of fixed frames we buffer a jump. This allows jump input before actually hitting the ground")]
         public int JumpBufferFrames = 7;
-        
-        [Header("WALLS")] 
+
+        [Header("WALLS")]
         [Tooltip("Allow wall sliding & jumping")]
         public bool AllowWalls = true;
-        
+
         [Tooltip("Set this to the layer climbable walls are on")]
         public LayerMask ClimbableLayer;
-        
+
         [Tooltip("Only wall slide when you're physically pushing against the wall")]
         public bool RequireInputPush = false;
 
         [Tooltip("How fast you climb walls.")]
         public float WallClimbSpeed = 5;
-        
+
         [Tooltip("The player's capacity to gain wall sliding speed. 0 = stick to wall")]
         public float WallFallAcceleration = 8;
 
@@ -75,20 +80,20 @@ namespace TarodevController {
 
         [Tooltip("The immediate velocity horizontal velocity applied when wall jumping")]
         public Vector2 WallJumpPower = new(30, 25);
-        
+
         [Tooltip("The frames before full horizontal movement is returned after a wall jump"), Min(1)]
         public int WallJumpInputLossFrames = 18;
-        
+
         [Header("LADDERS")]
         [Tooltip("Allow climbing ladders")]
         public bool SnapToLadders = true;
-        
+
         [Tooltip("Set this to the layer your ladders are on")]
         public LayerMask LadderLayer;
 
         [Tooltip("Ladder snap speed")]
         public float LadderSnapSpeed = 0.05f;
-        
+
         [Tooltip("Horizontal speed multiplier while attached to a ladder")]
         public float LadderShimmySpeedMultiplier = 0.5f;
 
@@ -97,10 +102,10 @@ namespace TarodevController {
 
         [Tooltip("How fast you slide down ladders")]
         public float LadderSlideSpeed = 12;
-        
+
         [Tooltip("How many frames can pass between ladder interactions. Helps jittery movement and jumping glitches")]
         public int LadderCooldownFrames = 8;
-        
+
         [Tooltip("Input required before you mount the ladder. Avoids unwanted climbing using controllers")]
         public float LadderClimbThreshold = 0.3f;
 
@@ -123,11 +128,11 @@ namespace TarodevController {
         [Tooltip("How long movement will be locked out. Animation clip length")]
         public float LedgeClimbDuration = 0.5f;
 
-        [Header("DASH")] 
+        [Header("DASH")]
         [Tooltip("Allows the player to dash")]
         public bool AllowDash = true;
 
-        [Tooltip("The velocity of the dash")] 
+        [Tooltip("The velocity of the dash")]
         public float DashVelocity = 50;
 
         [Tooltip("How many fixed frames the dash will last")]
@@ -153,15 +158,15 @@ namespace TarodevController {
         [Tooltip("Bounds for detecting walls on either side. Ensure it horizontally overflows your collider")]
         public Vector2 WallDetectorSize = new(0.75f, 1f);
 
-        [Header("EXTERNAL")] 
+        [Header("EXTERNAL")]
         [Tooltip("The rate at which external velocity decays")]
         public int ExternalVelocityDecay = 100;
 
 #if UNITY_EDITOR
-        [Header("GIZMOS")] 
+        [Header("GIZMOS")]
         [Tooltip("Color: White")]
         public bool ShowWallDetection = true;
-        
+
         [Tooltip("Color: Red")]
         public bool ShowLedgeDetection = true;
 #endif

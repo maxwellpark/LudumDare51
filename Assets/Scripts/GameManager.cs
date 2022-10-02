@@ -6,6 +6,7 @@ public class GameManager : StaticMonoBehaviour<GameManager>
     [SerializeField]
     private GameData _gameData;
 
+    [HideInInspector]
     public GameObject player;
 
     public void RestartGame()
