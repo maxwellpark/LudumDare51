@@ -135,6 +135,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 412623983, guid: 48134d5b43b24514581442b145f2deda, type: 3}
+      propertyPath: readableName
+      value: Falling Spikes
+      objectReference: {fileID: 0}
+    - target: {fileID: 1337419969, guid: 48134d5b43b24514581442b145f2deda, type: 3}
+      propertyPath: readableName
+      value: Triple Jump
+      objectReference: {fileID: 0}
+    - target: {fileID: 1128061710105854817, guid: 48134d5b43b24514581442b145f2deda, type: 3}
+      propertyPath: readableName
+      value: Spicy toes
+      objectReference: {fileID: 0}
     - target: {fileID: 3150447231374972644, guid: 48134d5b43b24514581442b145f2deda, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -697,6 +709,7 @@ MonoBehaviour:
   _smoothTime: 0.7
   _minX: -40
   _maxX: 40
+  _zDistance: 0
 --- !u!1 &1826870879 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3836054527727189976, guid: f70c62151281a3349a1456d2cbfe6fc3, type: 3}

@@ -9,6 +9,8 @@ public class TimerUI : MonoBehaviour
     private TMP_Text _currentTimeTxt;
     [SerializeField]
     private TMP_Text _bestTimeTxt;
+    [SerializeField]
+    private TMP_Text _bestTimeLabel;
 
     private TimerManager _timerManager;
 
@@ -19,6 +21,7 @@ public class TimerUI : MonoBehaviour
         _bestTimeTxt.text = "";
         _currentTimeTxt.gameObject.SetActive(true);
         _bestTimeTxt.gameObject.SetActive(_timerManager.BestTime.Milliseconds > 0);
+        _bestTimeLabel.gameObject.SetActive(_timerManager.BestTime.Milliseconds > 0);
     }
 
     private void Update()
@@ -26,17 +29,7 @@ public class TimerUI : MonoBehaviour
         if (_timerManager.timerStopped)
             return;
 
-        _currentTimeTxt.text = FormatText(_timerManager.CurrentTime);
-        _bestTimeTxt.text = FormatText(_timerManager.BestTime);
-    }
-
-    private string FormatText(TimeSpan time)
-    {
-        var text = string.Format(CultureInfo.CurrentCulture, "{0}:{1}:{2}",
-            time.Minutes,
-            time.Seconds,
-            time.Milliseconds);
-
-        return text;
+        _currentTimeTxt.text = $"{_timerManager.CurrentTime.ToString(@"mm\:ss\.fff")}";
+        _bestTimeTxt.text = $"{_timerManager.BestTime.ToString(@"mm\:ss\.fff")}";
     }
 }

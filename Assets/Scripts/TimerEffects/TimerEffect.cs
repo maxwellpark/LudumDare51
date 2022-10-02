@@ -10,6 +10,7 @@ public class TimerEffect : MonoBehaviour, ITimerEfect
 
     public bool isActive;
     protected Tilemap _tilemap;
+    public string readableName;
 
     protected virtual void Awake()
     {
