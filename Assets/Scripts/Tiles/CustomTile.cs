@@ -27,10 +27,10 @@ public class CustomTile : Tile
 
 #if UNITY_EDITOR
     // The following is a helper that adds a menu item to create a CustomTile Asset
-    [MenuItem("Assets/Create/CustomTiles/CustomTile")]
+    [MenuItem("LD51/Create/CustomTile")]
     public static void CreateCustomTile()
     {
-        string path = EditorUtility.SaveFilePanelInProject("Save CustomTile", "New CustomTile", "Asset", "Save Road Tile", "Assets/ScriptableObjects/CustomTiles");
+        string path = EditorUtility.SaveFilePanelInProject("Save CustomTile", "New CustomTile", "Asset", "Save Custom Tile", "Assets/ScriptableObjects/CustomTiles");
         if (path == "")
             return;
         AssetDatabase.CreateAsset(CreateInstance<CustomTile>(), path);
