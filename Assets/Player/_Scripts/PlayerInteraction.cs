@@ -76,10 +76,13 @@ public class PlayerInteraction : MonoBehaviour
 
     private IEnumerator DeathRoutine()
     {
+        // Play sound effect, then have a time delay before invoking the event
         _soundEffectManager.PlayEffectByName("TakeDamage");
         GameManager.Instance.player.GetComponent<PlayerController>().TakeAwayControl(true);
         GameManager.Instance.player.GetComponentInChildren<PlayerAnimator>().DisableAnimator();
+        AlertsManager.Instance.SetGameOverAlertActive(true);
         yield return new WaitForSeconds(_deathDelayInSeconds);
+
         onPlayerKilled?.Invoke();
         gameObject.SetActive(false);
     }

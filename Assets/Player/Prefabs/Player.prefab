@@ -5042,11 +5042,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -479300057
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 8620bcf7fa769e94fa548c2fc0325ef4, type: 3}
-  m_Color: {r: 0.023584902, g: 0.36636558, b: 1, a: 1}
+  m_Color: {r: 0.02352941, g: 0.8205394, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -15129,8 +15129,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1737375497
+  m_SortingLayer: 2
   m_SortingOrder: 1
   m_Sprite: {fileID: -1100869907, guid: caea21939dfcb8f49a8a937c8a98deaa, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -29826,6 +29826,7 @@ GameObject:
   - component: {fileID: 3836054527727189973}
   - component: {fileID: 3836054527727189974}
   - component: {fileID: 3836054527727189971}
+  - component: {fileID: 1826870885}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -29908,8 +29909,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.75}
-  m_Size: {x: 0.6, y: 1.5}
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.6, y: 1}
   m_Direction: 0
 --- !u!70 &3836054527727189971
 CapsuleCollider2D:
@@ -29924,9 +29925,25 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.25}
-  m_Size: {x: 1.08, y: 0.5}
+  m_Offset: {x: 0, y: -0.25}
+  m_Size: {x: 1, y: 0.5}
   m_Direction: 1
+--- !u!114 &1826870885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3836054527727189976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49ba6528f6127784ab51e8157f99c73f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentTile: {fileID: 0}
+  touchingGround: 0
+  timeOnGround: 0
+  _deathDelayInSeconds: 0.5
 --- !u!1 &3836054527797046537
 GameObject:
   m_ObjectHideFlags: 0
