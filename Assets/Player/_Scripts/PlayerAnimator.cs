@@ -59,6 +59,11 @@ namespace TarodevController
             _shield.SetActive(isActive);
         }
 
+        public void DisableAnimator()
+        {
+            _anim.enabled = false;
+        }
+
         #region Ground Movement
 
         [Header("GROUND MOVEMENT")]

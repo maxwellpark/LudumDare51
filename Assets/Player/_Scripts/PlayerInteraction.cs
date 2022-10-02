@@ -1,5 +1,5 @@
-using Unity.VisualScripting;
 using System.Collections;
+using TarodevController;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Tilemaps;
@@ -51,7 +51,6 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (collision.gameObject == _tilemapManager.collidableTilemap.gameObject)
         {
-            Debug.Log("Colliding with ground");
             touchingGround = true;
         }
     }
@@ -72,14 +71,16 @@ public class PlayerInteraction : MonoBehaviour
             GameManager.Instance.playerAnimator.ToggleShield(false);
             return;
         }
-        //_soundEffectManager.PlayEffectByName("TakeDamage");
-        //StartCoroutine(DelayBeforeDeath());
-        onPlayerKilled?.Invoke();
-        gameObject.SetActive(false);
+        StartCoroutine(DeathRoutine());
     }
 
-    private IEnumerator DelayBeforeDeath()
+    private IEnumerator DeathRoutine()
     {
+        _soundEffectManager.PlayEffectByName("TakeDamage");
+        GameManager.Instance.player.GetComponent<PlayerController>().TakeAwayControl(true);
+        GameManager.Instance.player.GetComponentInChildren<PlayerAnimator>().DisableAnimator();
         yield return new WaitForSeconds(_deathDelayInSeconds);
+        onPlayerKilled?.Invoke();
+        gameObject.SetActive(false);
     }
 }

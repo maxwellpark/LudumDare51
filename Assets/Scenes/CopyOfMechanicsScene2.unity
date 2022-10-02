@@ -141,7 +141,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1176856371, guid: 48134d5b43b24514581442b145f2deda, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1337419967, guid: 48134d5b43b24514581442b145f2deda, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1544896485510880449, guid: 48134d5b43b24514581442b145f2deda, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3150447231374972644, guid: 48134d5b43b24514581442b145f2deda, type: 3}
       propertyPath: m_RootOrder
@@ -193,11 +201,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6522301105931235268, guid: 48134d5b43b24514581442b145f2deda, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8692784571294415257, guid: 48134d5b43b24514581442b145f2deda, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 48134d5b43b24514581442b145f2deda, type: 3}
@@ -819,7 +827,7 @@ MonoBehaviour:
   currentTile: {fileID: 0}
   touchingGround: 0
   timeOnGround: 0
-  _deathDelayInSeconds: 0
+  _deathDelayInSeconds: 1
 --- !u!1001 &642494149804437161
 PrefabInstance:
   m_ObjectHideFlags: 0
