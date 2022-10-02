@@ -14,7 +14,9 @@ public class GameManager : StaticMonoBehaviour<GameManager>
     // Start is called before the first frame update
     void Start()
     {
-
+        var player = GameObject.FindWithTag("Player");
+        var interaction = player.GetComponent<PlayerInteraction>();
+        interaction.onPlayerKilled += RestartGame;
     }
 
     // Update is called once per frame

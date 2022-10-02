@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class TimerManager : StaticMonoBehaviour<TimerManager>
 {
@@ -16,11 +17,29 @@ public class TimerManager : StaticMonoBehaviour<TimerManager>
     private float _secondsBetweenEvents = 10;
 
     // Fires every n seconds
-    public static event UnityAction onTimerTriggered;
+    public event UnityAction onTimerTriggered;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        DontDestroyOnLoad(gameObject);
+    }
 
     // Start is called before the first frame update
     void Start()
     {
+        SceneManager.activeSceneChanged += (c, a) => Init();
+    }
+
+    private void Init()
+    {
+        var player = GameObject.FindWithTag("Player");
+
+        if (player != null)
+        {
+            var interaction = player.GetComponent<PlayerInteraction>();
+            interaction.onPlayerKilled += OnKilledHandler;
+        }
         ResetTimer();
     }
 
@@ -28,6 +47,15 @@ public class TimerManager : StaticMonoBehaviour<TimerManager>
     {
         _secondsPast = 0;
         _nextEventTimeInSeconds = _secondsBetweenEvents;
+    }
+
+    private void OnKilledHandler()
+    {
+        if (CurrentTime > BestTime)
+        {
+            BestTime = CurrentTime;
+        }
+        ResetTimer();
     }
 
     // Update is called once per frame

@@ -7,17 +7,7 @@ public class DebuffManager : StaticMonoBehaviour<DebuffManager>
     [SerializeField]
     private List<Debuff> _debuffs;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        TimerManager.onTimerTriggered += ActivateRandomDebuff;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+    private TimerManager _timerManager;
 
     private void ActivateRandomDebuff()
     {
@@ -26,5 +16,16 @@ public class DebuffManager : StaticMonoBehaviour<DebuffManager>
         var debuff = _debuffs.ElementAt(index);
         Debug.Log("Enabling " + debuff);
         debuff.Activate();
+    }
+
+    private void OnEnable()
+    {
+        _timerManager = TimerManager.GetInstance();
+        _timerManager.onTimerTriggered += ActivateRandomDebuff;
+    }
+
+    private void OnDisable()
+    {
+        _timerManager.onTimerTriggered -= ActivateRandomDebuff;
     }
 }

@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenuScene.unity
     guid: a1d814c99f14961429086253db39c012
+  - enabled: 1
+    path: Assets/Scenes/CopyOfMechanicsScene2.unity
+    guid: e6626dde112f2c94fb63ba9ce2a9948e
   m_configObjects: {}
