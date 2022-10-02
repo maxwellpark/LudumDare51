@@ -181,11 +181,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3150447231374972645, guid: 48134d5b43b24514581442b145f2deda, type: 3}
       propertyPath: m_Name
-      value: DebuffManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 6522301105931235268, guid: 48134d5b43b24514581442b145f2deda, type: 3}
-      propertyPath: m_IsActive
-      value: 0
+      value: TimerEffectManager
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 48134d5b43b24514581442b145f2deda, type: 3}
