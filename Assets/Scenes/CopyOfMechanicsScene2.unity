@@ -592,7 +592,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 486661760509247227, guid: ee0453e30b6fdef45b4096bb8f93ddf8, type: 3}
       propertyPath: _secondsBetweenEvents
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee0453e30b6fdef45b4096bb8f93ddf8, type: 3}
