@@ -139,6 +139,22 @@ PrefabInstance:
       propertyPath: readableName
       value: Falling Spikes
       objectReference: {fileID: 0}
+    - target: {fileID: 412623983, guid: 48134d5b43b24514581442b145f2deda, type: 3}
+      propertyPath: spawnBounds.m_Center.x
+      value: 0.72
+      objectReference: {fileID: 0}
+    - target: {fileID: 412623983, guid: 48134d5b43b24514581442b145f2deda, type: 3}
+      propertyPath: spawnBounds.m_Center.y
+      value: 23.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 412623983, guid: 48134d5b43b24514581442b145f2deda, type: 3}
+      propertyPath: spawnBounds.m_Extent.x
+      value: 19.86
+      objectReference: {fileID: 0}
+    - target: {fileID: 412623983, guid: 48134d5b43b24514581442b145f2deda, type: 3}
+      propertyPath: spawnBounds.m_Extent.y
+      value: 2.01
+      objectReference: {fileID: 0}
     - target: {fileID: 1337419969, guid: 48134d5b43b24514581442b145f2deda, type: 3}
       propertyPath: readableName
       value: Triple Jump
