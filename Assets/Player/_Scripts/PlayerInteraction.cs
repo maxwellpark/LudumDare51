@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Tilemaps;
@@ -61,6 +62,11 @@ public class PlayerInteraction : MonoBehaviour
 
     public void KillPlayer()
     {
+        if (GameManager.Instance.playerAnimator.HasShield)
+        {
+            GameManager.Instance.playerAnimator.ToggleShield(false);
+            return;
+        }
         onPlayerKilled?.Invoke();
         gameObject.SetActive(false);
     }
