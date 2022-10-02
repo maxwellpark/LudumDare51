@@ -16,7 +16,7 @@ public class TimerEffectManager : StaticMonoBehaviour<TimerEffectManager>
             return toReturn;
         }
     }
-    
+
     public List<TimerEffect> CurrentDebuffs
     {
         get
@@ -27,26 +27,24 @@ public class TimerEffectManager : StaticMonoBehaviour<TimerEffectManager>
         }
     }
 
+    public List<TimerEffect> AllTimerEffects { get; private set; }
+
     private TimerManager _timerManager;
 
     private void Start()
     {
         _debuffs = GetComponentsInChildren<Debuff>();
         _buffs = GetComponentsInChildren<Buff>();
+
+        AllTimerEffects = new List<TimerEffect>();
+        AllTimerEffects.AddRange(_debuffs);
+        AllTimerEffects.AddRange(_buffs);
     }
 
     private void ActivateRandomEffect()
     {
-        var isBuff = Random.Range(0, 2) == 1;
-        ActivateRandomEffect(isBuff);
-    }
-
-    private void ActivateRandomEffect(bool isBuff)
-    {
-        TimerEffect[] effects = isBuff ? _buffs : _debuffs;
-
-        var index = Random.Range(0, effects.Count());
-        var effect = effects.ElementAt(index);
+        var index = Random.Range(0, AllTimerEffects.Count);
+        var effect = AllTimerEffects.ElementAt(index);
         effect.AddPower();
     }
 
