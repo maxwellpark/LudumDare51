@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -5,6 +6,26 @@ public class TimerEffectManager : StaticMonoBehaviour<TimerEffectManager>
 {
     private Debuff[] _debuffs;
     private Buff[] _buffs;
+
+    public List<TimerEffect> CurrentBuffs
+    {
+        get
+        {
+            List<TimerEffect> toReturn = new List<TimerEffect>();
+            toReturn.AddRange(_buffs.Where(eff => eff.isActive));
+            return toReturn;
+        }
+    }
+    
+    public List<TimerEffect> CurrentDebuffs
+    {
+        get
+        {
+            List<TimerEffect> toReturn = new List<TimerEffect>();
+            toReturn.AddRange(_debuffs.Where(eff => eff.isActive));
+            return toReturn;
+        }
+    }
 
     private TimerManager _timerManager;
 
