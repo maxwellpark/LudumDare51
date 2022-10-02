@@ -9,8 +9,13 @@ public class FallingSpikesDebuff : EnvironmentDebuff
     private int _xMax;
     private int _y;
 
+    [SerializeField]
+    private float _timeDelayInSeconds = 1f;
+    private float _timer;
+
     public override void Activate()
     {
+        base.Activate();
         SpawnSpike();
     }
 
@@ -44,6 +49,15 @@ public class FallingSpikesDebuff : EnvironmentDebuff
     // Update is called once per frame
     protected override void Update()
     {
+        if (!isActive)
+            return;
 
+        _timer += Time.deltaTime;
+
+        if (_timer >= _timeDelayInSeconds)
+        {
+            SpawnSpike();
+            _timer = 0f;
+        }
     }
 }

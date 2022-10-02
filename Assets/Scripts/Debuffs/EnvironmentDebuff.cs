@@ -1,7 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public abstract class EnvironmentDebuff : Debuff
 {
+    public override void Activate()
+    {
+        isActive = true;
+    }
 }

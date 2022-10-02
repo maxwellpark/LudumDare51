@@ -5,6 +5,7 @@ public abstract class Debuff : MonoBehaviour, IDebuff
 {
     public abstract void Activate();
 
+    public bool isActive;
     protected Tilemap _tilemap;
 
     protected virtual void Awake()

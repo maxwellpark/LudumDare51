@@ -12,6 +12,13 @@ public class DebuffManager : StaticMonoBehaviour<DebuffManager>
     private void ActivateRandomDebuff()
     {
         Debug.Log("Enabling random debuff...");
+        var inactiveDebuffs = _debuffs.Where(d => !d.isActive);
+
+        if (!inactiveDebuffs.Any())
+        {
+            Debug.LogWarning("No more available debuffs to activate.");
+            return;
+        }
         var index = Random.Range(0, _debuffs.Count);
         var debuff = _debuffs.ElementAt(index);
         Debug.Log("Enabling " + debuff);
