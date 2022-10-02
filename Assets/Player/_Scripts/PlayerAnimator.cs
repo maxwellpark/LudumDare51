@@ -9,6 +9,9 @@ namespace TarodevController
         private Animator _anim;
         private SpriteRenderer _renderer;
         private AudioSource _source;
+        public GameObject _shield;
+
+        public bool HasShield => _shield.activeSelf;
 
         private void Awake()
         {
@@ -49,6 +52,11 @@ namespace TarodevController
         public void MakePlayerInvisible()
         {
             _renderer.enabled = false;
+        }
+
+        public void ToggleShield(bool isActive)
+        {
+            _shield.SetActive(isActive);
         }
 
         #region Ground Movement

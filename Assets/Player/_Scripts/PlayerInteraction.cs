@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
@@ -66,6 +67,11 @@ public class PlayerInteraction : MonoBehaviour
 
     public void KillPlayer()
     {
+        if (GameManager.Instance.playerAnimator.HasShield)
+        {
+            GameManager.Instance.playerAnimator.ToggleShield(false);
+            return;
+        }
         //_soundEffectManager.PlayEffectByName("TakeDamage");
         //StartCoroutine(DelayBeforeDeath());
         onPlayerKilled?.Invoke();
