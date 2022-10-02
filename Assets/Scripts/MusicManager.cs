@@ -17,23 +17,15 @@ public class MusicManager : StaticMonoBehaviour<MusicManager>
 
     private AudioSource _currentSrc;
 
+    [SerializeField]
+    private GameData _gameData;
+
     private Dictionary<MusicState, AudioSource> _srcMap;
 
     protected override void Awake()
     {
         base.Awake();
-        menuSrc.enabled = true;
-        inGameSrc.enabled = true;
-
-        _srcMap = new Dictionary<MusicState, AudioSource>
-        {
-            { MusicState.Menu, menuSrc },
-            { MusicState.InGame, inGameSrc },
-            { MusicState.None, null }
-        };
-        _currentSrc = null;
-        SceneManager.activeSceneChanged += (c, a) => OnSceneChangedHandler();
-        PlayMusic(MusicState.InGame);
+        Init();
     }
 
     private void Start()
@@ -53,7 +45,13 @@ public class MusicManager : StaticMonoBehaviour<MusicManager>
         };
         _currentSrc = null;
         SceneManager.activeSceneChanged += (c, a) => OnSceneChangedHandler();
-        PlayMusic(MusicState.InGame);
+        PlayMusic();
+    }
+
+    public void PlayMusic()
+    {
+        var state = GetStateByScene(SceneManager.GetActiveScene().name);
+        PlayMusic(state);
     }
 
     public void PlayMusic(MusicState state)
@@ -70,7 +68,7 @@ public class MusicManager : StaticMonoBehaviour<MusicManager>
 
     private void OnSceneChangedHandler()
     {
-        PlayMusic(MusicState.InGame);
+        PlayMusic();
     }
 
     private void ResetSrcs()
@@ -105,6 +103,14 @@ public class MusicManager : StaticMonoBehaviour<MusicManager>
     public MusicState GetStateByScene(string sceneName)
     {
         Debug.Log("Getting music state for scene: " + sceneName);
+        sceneName = sceneName.ToUpper();
+
+        if (sceneName == _gameData.mainMenuSceneName.ToUpper())
+            return MusicState.Menu;
+
+        if (sceneName == _gameData.mainSceneName.ToUpper())
+            return MusicState.InGame;
+
         Debug.LogWarning("No key found in scene map with key: " + sceneName);
         return MusicState.None;
     }
