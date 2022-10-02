@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88a1d3a4180a4f543b19c2e80518ece2, type: 3}
   m_Name: ToMainScene
   m_EditorClassIdentifier: 
-  sceneName: MainScene
+  sceneName: CopyOfMechanicsScene2
   music: 0
