@@ -6,6 +6,8 @@ public class GameManager : StaticMonoBehaviour<GameManager>
     [SerializeField]
     private GameData _gameData;
 
+    public GameObject player;
+
     public void RestartGame()
     {
         SceneManager.LoadSceneAsync(_gameData.mainSceneName);
@@ -14,7 +16,7 @@ public class GameManager : StaticMonoBehaviour<GameManager>
     // Start is called before the first frame update
     void Start()
     {
-        var player = GameObject.FindWithTag("Player");
+        player = GameObject.FindWithTag("Player");
         var interaction = player.GetComponent<PlayerInteraction>();
         interaction.onPlayerKilled += RestartGame;
     }

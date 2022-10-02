@@ -54,11 +54,9 @@ public class PlayerInteraction : MonoBehaviour
         }
     }
 
-    private void KillPlayer()
+    public void KillPlayer()
     {
         onPlayerKilled?.Invoke();
         gameObject.SetActive(false);
     }
-
-
 }

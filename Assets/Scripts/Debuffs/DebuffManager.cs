@@ -1,13 +1,17 @@
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class DebuffManager : StaticMonoBehaviour<DebuffManager>
 {
     [SerializeField]
-    private List<Debuff> _debuffs;
+    private Debuff[] _debuffs;
 
     private TimerManager _timerManager;
+
+    private void Start()
+    {
+        _debuffs = GetComponentsInChildren<Debuff>();
+    }
 
     private void ActivateRandomDebuff()
     {
@@ -19,7 +23,7 @@ public class DebuffManager : StaticMonoBehaviour<DebuffManager>
             Debug.LogWarning("No more available debuffs to activate.");
             return;
         }
-        var index = Random.Range(0, _debuffs.Count);
+        var index = Random.Range(0, _debuffs.Count());
         var debuff = _debuffs.ElementAt(index);
         Debug.Log("Enabling " + debuff);
         debuff.Activate();
