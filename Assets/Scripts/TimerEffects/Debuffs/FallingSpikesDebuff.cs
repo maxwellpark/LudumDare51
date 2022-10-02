@@ -1,13 +1,13 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class FallingSpikesDebuff : EnvironmentDebuff
 {
     [SerializeField]
     private GameObject _spikePrefab;
 
-    private int _xMin;
-    private int _xMax;
-    private int _y;
+    public Bounds spawnBounds;
 
     [SerializeField]
     private float _timeDelayInSeconds = 1f;
@@ -28,25 +28,17 @@ public class FallingSpikesDebuff : EnvironmentDebuff
 
     private Vector2 GetNewSpikePosition()
     {
-        var x = Random.Range(_xMin, _xMax + 1);
-        var position = new Vector2(x, _y);
+        var x = Random.Range(spawnBounds.min.x, spawnBounds.max.x);
+        var y = Random.Range(spawnBounds.min.y, spawnBounds.max.y);
+        var position = new Vector2(x, y);
         return position;
     }
 
-    // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
-        Debug.Log("Tile map size: " + _tilemap.size);
-        Debug.Log("Map bounds min: " + _tilemap.cellBounds.min);
-        Debug.Log("Map bounds max: " + _tilemap.cellBounds.max);
-
-        _xMin = _tilemap.cellBounds.min.x + 1;
-        _xMax = _tilemap.cellBounds.max.x - 1;
-        _y = _tilemap.cellBounds.max.y;
     }
 
-    // Update is called once per frame
     protected override void Update()
     {
         if (!isActive)
@@ -59,5 +51,11 @@ public class FallingSpikesDebuff : EnvironmentDebuff
             SpawnSpike();
             _timer = 0f;
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(spawnBounds.center, spawnBounds.size);
     }
 }
