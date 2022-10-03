@@ -470,7 +470,7 @@ namespace TarodevController
         {
             if (_dashToConsume && _canDash && !_crouching)
             {
-                var dir = new Vector2(_frameInput.Move.x, Mathf.Max(_frameInput.Move.y, 0f)).normalized;
+                var dir = new Vector2(_frameInput.DashDirection.x, _frameInput.DashDirection.y).normalized;
                 if (dir == Vector2.zero)
                 {
                     _dashToConsume = false;

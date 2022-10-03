@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 #if ENABLE_INPUT_SYSTEM
@@ -9,6 +10,13 @@ namespace TarodevController {
         public FrameInput FrameInput { get; private set; }
 
         private void Update() => FrameInput = Gather();
+
+        private Camera mainCamera;
+
+        private void Start()
+        {
+            mainCamera = Camera.main;
+        }
 
 #if ENABLE_INPUT_SYSTEM
         private PlayerInputActions _actions;
@@ -37,14 +45,33 @@ namespace TarodevController {
         }
 
 #elif ENABLE_LEGACY_INPUT_MANAGER
-        private FrameInput Gather() {
+        private FrameInput Gather()
+        {
+            Vector3 mouseWorldPos = GetWorldMousePosition();
+            Vector3 mouseOffset = mouseWorldPos - transform.position;
+            
             return new FrameInput {
                 JumpDown = Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.C),
                 JumpHeld = Input.GetButton("Jump") || Input.GetKey(KeyCode.C),
                 DashDown = Input.GetMouseButtonDown(0),
                 AttackDown = Input.GetKeyDown(KeyCode.Z),
                 Move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")),
+                DashDirection = new Vector2(mouseOffset.x, mouseOffset.y)
             };
+        }
+        
+        private Vector3 GetWorldMousePosition()
+        {
+            // x-z plane
+            var plane = new Plane(Vector3.zero, new Vector3(1, 0,0), new Vector3(1,1,0));
+        
+            var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+        
+            if (plane.Raycast(ray, out float distance)){
+                return ray.GetPoint(distance);
+            }
+
+            return Vector3.zero;
         }
 #endif
     }
@@ -55,5 +82,6 @@ namespace TarodevController {
         public bool JumpHeld;
         public bool DashDown;
         public bool AttackDown;
+        public Vector2 DashDirection;
     }
 }

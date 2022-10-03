@@ -7,7 +7,6 @@ namespace TarodevController {
         [SerializeField] private float _minX, _maxX;
         [SerializeField] private float _zDistance;
 
-        private float _yLock;
         private Vector3 _currentVel;
 
         private void Start() {
@@ -16,7 +15,6 @@ namespace TarodevController {
                 if (player != null) _player = player.transform;
             }
 
-            _yLock = transform.position.y;
         }
 
 
