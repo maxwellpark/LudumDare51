@@ -22,7 +22,7 @@ MonoBehaviour:
   CrouchSlowdownFrames: 50
   CrouchBufferCheck: 0.1
   AllowDoubleJump: 1
-  AllowTripleJump: 0
+  AllowTripleJump: 1
   JumpPower: 20
   MaxFallSpeed: 40
   FallAcceleration: 50
@@ -56,7 +56,7 @@ MonoBehaviour:
   LedgeRaycastSpacing: 0.2
   LedgeClimbDuration: 0.5
   AllowDash: 1
-  DashVelocity: 30
+  DashVelocity: 40
   DashDurationFrames: 5
   DashEndHorizontalMultiplier: 0.25
   AllowAttacks: 1

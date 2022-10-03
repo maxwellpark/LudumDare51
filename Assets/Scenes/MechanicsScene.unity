@@ -132,7 +132,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 412623981, guid: 48134d5b43b24514581442b145f2deda, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 412623983, guid: 48134d5b43b24514581442b145f2deda, type: 3}
       propertyPath: spawnBounds.m_Center.x
@@ -148,7 +148,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1176856371, guid: 48134d5b43b24514581442b145f2deda, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1337419967, guid: 48134d5b43b24514581442b145f2deda, type: 3}
       propertyPath: m_IsActive
@@ -208,11 +208,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6522301105931235268, guid: 48134d5b43b24514581442b145f2deda, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8692784571294415257, guid: 48134d5b43b24514581442b145f2deda, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 48134d5b43b24514581442b145f2deda, type: 3}
