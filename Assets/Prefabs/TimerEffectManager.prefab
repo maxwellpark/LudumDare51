@@ -45,12 +45,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActive: 0
+  isStackable: 1
   readableName: Falling Spikes
   powerLevel: 0
   _spikePrefab: {fileID: 4489050890515247590, guid: 63877b2e8b90a5c4a81308b42bc19597, type: 3}
   spawnBounds:
-    m_Center: {x: 0.72, y: 23.35, z: 0}
-    m_Extent: {x: 19.86, y: 2.01, z: 0}
+    m_Center: {x: 2.8, y: 27.45, z: 0}
+    m_Extent: {x: 22.03, y: 2.01, z: 0}
   _timeDelayInSeconds: 1
 --- !u!1 &1176856371
 GameObject:
@@ -97,6 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActive: 0
+  isStackable: 1
   readableName: Time sped up
   powerLevel: 0
   _timeScaleIncrement: 0.1
@@ -145,6 +147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActive: 0
+  isStackable: 0
   readableName: Triple Jump
   powerLevel: 0
   _stats: {fileID: 11400000, guid: 8f3e4ac96e9fac84e96172956137e1c4, type: 2}
@@ -193,6 +196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActive: 0
+  isStackable: 0
   readableName: Shield
   powerLevel: 0
 --- !u!1 &3150447231374972645
@@ -290,7 +294,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActive: 0
-  readableName: Spicy toes
+  isStackable: 0
+  readableName: The floor is lava
   powerLevel: 0
   _timeLimitInSeconds: 2.5
 --- !u!1 &8692784571294415257
@@ -338,5 +343,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActive: 0
+  isStackable: 0
   readableName: No croissant for you
   powerLevel: 0

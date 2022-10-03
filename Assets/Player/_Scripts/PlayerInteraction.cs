@@ -69,6 +69,7 @@ public class PlayerInteraction : MonoBehaviour
         if (GameManager.Instance.playerAnimator.HasShield)
         {
             GameManager.Instance.playerAnimator.ToggleShield(false);
+            TimerEffectManager.Instance.DeactivateShield();
             return;
         }
         StartCoroutine(DeathRoutine());

@@ -130,35 +130,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 412623981, guid: 48134d5b43b24514581442b145f2deda, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 412623983, guid: 48134d5b43b24514581442b145f2deda, type: 3}
-      propertyPath: spawnBounds.m_Center.x
-      value: 2.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 412623983, guid: 48134d5b43b24514581442b145f2deda, type: 3}
-      propertyPath: spawnBounds.m_Center.y
-      value: 27.45
-      objectReference: {fileID: 0}
-    - target: {fileID: 412623983, guid: 48134d5b43b24514581442b145f2deda, type: 3}
-      propertyPath: spawnBounds.m_Extent.x
-      value: 22.03
-      objectReference: {fileID: 0}
     - target: {fileID: 1176856371, guid: 48134d5b43b24514581442b145f2deda, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1337419967, guid: 48134d5b43b24514581442b145f2deda, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1128061710105854817, guid: 48134d5b43b24514581442b145f2deda, type: 3}
-      propertyPath: readableName
-      value: The floor is lava
-      objectReference: {fileID: 0}
-    - target: {fileID: 1544896485510880449, guid: 48134d5b43b24514581442b145f2deda, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -213,10 +189,6 @@ PrefabInstance:
     - target: {fileID: 6522301105931235268, guid: 48134d5b43b24514581442b145f2deda, type: 3}
       propertyPath: m_IsActive
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7402795667300760722, guid: 48134d5b43b24514581442b145f2deda, type: 3}
-      propertyPath: readableName
-      value: No croissant for you (invisible)
       objectReference: {fileID: 0}
     - target: {fileID: 8692784571294415257, guid: 48134d5b43b24514581442b145f2deda, type: 3}
       propertyPath: m_IsActive

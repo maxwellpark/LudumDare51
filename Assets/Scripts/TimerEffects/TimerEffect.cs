@@ -14,6 +14,7 @@ public class TimerEffect : MonoBehaviour, ITimerEfect
     }
 
     public bool isActive;
+    public bool isStackable = true;
     protected Tilemap _tilemap;
     public string readableName;
     public int powerLevel = 0;

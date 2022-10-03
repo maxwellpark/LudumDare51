@@ -29,6 +29,10 @@ public class TimerEffectManager : StaticMonoBehaviour<TimerEffectManager>
 
     public List<TimerEffect> AllTimerEffects { get; private set; }
 
+    public List<TimerEffect> AvailableTimerEffects => AllTimerEffects
+        .Where(eff => !(eff.isActive && !eff.isStackable))
+        .ToList();
+
     private TimerManager _timerManager;
 
     private void Start()
@@ -43,8 +47,8 @@ public class TimerEffectManager : StaticMonoBehaviour<TimerEffectManager>
 
     private void ActivateRandomEffect()
     {
-        var index = Random.Range(0, AllTimerEffects.Count);
-        var effect = AllTimerEffects.ElementAt(index);
+        var index = Random.Range(0, AvailableTimerEffects.Count);
+        var effect = AvailableTimerEffects.ElementAt(index);
 
         if (effect is Buff)
         {
@@ -56,6 +60,16 @@ public class TimerEffectManager : StaticMonoBehaviour<TimerEffectManager>
         }
 
         effect.AddPower();
+    }
+
+    public void DeactivateShield()
+    {
+        var shield = AllTimerEffects.FirstOrDefault(eff => eff is ShieldBuff);
+        if (shield != null)
+        {
+            var buff = shield as ShieldBuff;
+            buff.RemovePower();
+        }
     }
 
     private void OnEnable()
