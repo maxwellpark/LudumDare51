@@ -41,7 +41,10 @@ public class SoundEffectManager : StaticMonoBehaviour<SoundEffectManager>
     {
         name = name.ToUpper();
         var effect = _effects.FirstOrDefault(eff => eff.effectName.ToUpper() == name);
-        effect.src.Stop();
-        effect.src.Play();
+        if (effect.src != null)
+        {
+            effect.src.Stop();
+            effect.src.Play();
+        }
     }
 }
