@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10b823639e543694d890e5f8a77be1af, type: 3}
   m_Name: Player Stats
   m_EditorClassIdentifier: 
-  MaxSpeed: 10
-  Acceleration: 120
+  MaxSpeed: 6
+  Acceleration: 80
   GroundDeceleration: 900
   AirDeceleration: 60
   GroundingForce: -1.5
@@ -22,10 +22,10 @@ MonoBehaviour:
   CrouchSlowdownFrames: 50
   CrouchBufferCheck: 0.1
   AllowDoubleJump: 1
-  AllowTripleJump: 1
-  JumpPower: 36
+  AllowTripleJump: 0
+  JumpPower: 20
   MaxFallSpeed: 40
-  FallAcceleration: 110
+  FallAcceleration: 50
   JumpEndEarlyGravityModifier: 3
   CoyoteFrames: 7
   JumpBufferFrames: 7
@@ -56,7 +56,7 @@ MonoBehaviour:
   LedgeRaycastSpacing: 0.2
   LedgeClimbDuration: 0.5
   AllowDash: 1
-  DashVelocity: 50
+  DashVelocity: 30
   DashDurationFrames: 5
   DashEndHorizontalMultiplier: 0.25
   AllowAttacks: 1

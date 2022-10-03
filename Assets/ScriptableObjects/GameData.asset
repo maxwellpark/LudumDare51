@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: GameData
   m_EditorClassIdentifier: 
   mainMenuSceneName: MainMenuScene
-  mainSceneName: CopyOfMechanicsScene2
+  mainSceneName: MechanicsScene
