@@ -43,6 +43,7 @@ public class TimerEffectManager : StaticMonoBehaviour<TimerEffectManager>
         AllTimerEffects = new List<TimerEffect>();
         AllTimerEffects.AddRange(_debuffs);
         AllTimerEffects.AddRange(_buffs);
+        ActivateRandomEffect();
     }
 
     private void ActivateRandomEffect()
