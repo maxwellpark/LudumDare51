@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using TarodevController;
 using UnityEngine;
@@ -42,16 +43,26 @@ public class PlayerInteraction : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-
-    }
-
     private void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject == _tilemapManager.collidableTilemap.gameObject)
         {
             touchingGround = true;
+        }
+
+        var position = new Vector2(
+            Convert.ToInt32(transform.position.x), Convert.ToInt32(transform.position.y));
+
+        var cellPosition = _tilemapManager.collidableTilemap.WorldToCell(position);
+
+        var tile = _tilemapManager.collidableTilemap.GetTile(cellPosition);
+        if (tile == null)
+            return;
+
+        // Check for death tiles
+        if (tile.name.StartsWith("SpikeTile"))
+        {
+            KillPlayer();
         }
     }
 

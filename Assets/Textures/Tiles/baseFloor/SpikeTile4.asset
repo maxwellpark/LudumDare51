@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: FloorBasic (32x32)_79
+  m_Name: SpikeTile4
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 1232299131, guid: 597b74a0968a7244cb9e516eb903be5f, type: 3}
+  m_Sprite: {fileID: -1109059701, guid: 597b74a0968a7244cb9e516eb903be5f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
